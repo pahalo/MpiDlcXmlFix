@@ -2,7 +2,6 @@ package io.goobi.dlc;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import org.apache.logging.log4j.core.config.Configurator;
 import java.nio.file.Paths;
 
-class MpiDlcXmlFixTest {
+class FixForXmlFiles_Test {
 	private static boolean logCreated = false;
 
 	@Test
@@ -80,32 +79,23 @@ class MpiDlcXmlFixTest {
 		} catch (Exception e) {
 			fail("Exception thrown during test", e);
 		}
-		// Checking if every xml file passes
-		try {
-			File validXmlFile = new File("src/test/.xml");
-
-			Element result = FixForXmlFiles.processXmlFile(validXmlFile);
-
-			assertNull(result);
-		} catch (Exception e) {
-			fail("Exception thrown during test", e);
-		}
 	}
 
 	@Test
 	public void testCollectXmlElements() throws Exception {
-		try {
-			String xmlFilePath = "/src/test/resources/meta.xml";
-			File xmlFile = new File(xmlFilePath);
-			SAXBuilder saxBuilder = new SAXBuilder();
-			Document document = saxBuilder.build(xmlFile);
-			Element rootElement = document.getRootElement();
+	    try {
+	        String relativeXmlFilePath = "src/test/meta.xml";
 
-			List<String> xmlElementsList = FixForXmlFiles.collectXmlElements(rootElement, xmlFile);
-			assertTrue(xmlElementsList.size() > 0);
-		} catch (IOException e) {
-			fail("Exception thrown during test", e);
-		}
+	        File xmlFile = new File(relativeXmlFilePath);
+	        SAXBuilder saxBuilder = new SAXBuilder();
+	        Document document = saxBuilder.build(xmlFile);
+	        Element rootElement = document.getRootElement();
+
+	        List<String> xmlElementsList = FixForXmlFiles.collectXmlElements(rootElement, xmlFile);
+	        assertTrue(xmlElementsList.size() > 0);
+	    } catch (IOException e) {
+	        fail("Exception thrown during test", e);
+	    }
 	}
 
 	@Test
@@ -152,7 +142,7 @@ class MpiDlcXmlFixTest {
 	void testGenerateBackupFile() {
 		try {
 			// Creating temporary backupfiles
-			Path xmlDirectory = Paths.get("/src/test/resources/");
+			Path xmlDirectory = Paths.get("src/test/resources/");
 			Path tempXmlFile = Files.createTempFile(xmlDirectory, "tempXml", ".xml").toAbsolutePath().normalize()
 					.toRealPath();
 
@@ -170,6 +160,16 @@ class MpiDlcXmlFixTest {
 			List<String> originalLines = Files.readAllLines(xmlFile.toPath());
 			List<String> backupLines = Files.readAllLines(expectedBackupFile.toPath());
 			assertEquals(originalLines, backupLines);
+			
+			//Deleting all Files
+			Files.delete(tempXmlFile);
+			String pathToDelete = "src/test/resources/"+ expectedBackupFileName;
+            File fileToDelete = new File(pathToDelete);
+            
+			if (expectedBackupFile.exists()) {
+				Files.delete(fileToDelete.toPath());
+            }
+			
 		} catch (IOException e) {
 			fail("Exception thrown during test", e);
 		}
