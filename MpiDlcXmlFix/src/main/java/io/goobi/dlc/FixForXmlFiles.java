@@ -166,6 +166,7 @@ public class FixForXmlFiles {
                 }
             }
         }
+    	System.out.println(xmlElementsList);
     	return xmlElementsList;
     }
 

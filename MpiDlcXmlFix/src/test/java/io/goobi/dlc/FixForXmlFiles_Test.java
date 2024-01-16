@@ -16,13 +16,10 @@ import org.jdom2.input.SAXBuilder;
 import java.util.Arrays;
 import java.io.IOException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
 
 class FixForXmlFiles_Test {
 	private static boolean logCreated = false;
-	private static final Logger logger = LogManager.getLogger(FixForXmlFiles.class);
 	@Test
 	void testProcessFiles() {
 		File testDirectory = new File("testDirectory");
@@ -83,8 +80,7 @@ class FixForXmlFiles_Test {
 	@Test
 	public void testCollectXmlElements() throws Exception {
 	    try {
-	        String relativeXmlFilePath = "src/test/meta.xml";
-
+	        String relativeXmlFilePath = "src/test/resources/meta.xml";
 	        File xmlFile = new File(relativeXmlFilePath);
 	        SAXBuilder saxBuilder = new SAXBuilder();
 	        Document document = saxBuilder.build(xmlFile);
@@ -142,7 +138,7 @@ class FixForXmlFiles_Test {
 	void testGenerateBackupFile() {
 	    try {
 	        // Pfad zur ursprünglichen XML-Datei
-	    	String filePath = "/Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml";
+	    	String filePath = "src/test/resources/meta.xml";
 	    	File xmlFilePath = new File(filePath);
 	    	
 	    	// Sicherungskopie erstellen
@@ -154,20 +150,13 @@ class FixForXmlFiles_Test {
 
 	    	// Inhalt überprüfen
 	    	List<String> originalLines = Files.readAllLines(xmlFilePath.toPath());
-	    	logger.info(originalLines);
 	    	List<String> backupLines = Files.readAllLines(expectedBackupFile.toPath());
-	    	logger.info(backupLines);
-	    	
-	    	boolean areEqual = originalLines.equals(backupLines);
-	    	System.out.println("Lines are equal: " + areEqual);
-	    	
 	    	assertEquals(originalLines, backupLines);
 	    	
 	    } catch (IOException e) {
 	        fail("Exception thrown during test", e);
 	    }
 	}
-	
 
 	@BeforeEach
 	private void loggingTests() {
