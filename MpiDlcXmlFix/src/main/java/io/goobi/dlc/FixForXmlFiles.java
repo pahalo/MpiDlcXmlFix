@@ -13,10 +13,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 /**
  * This class searches tif for duplicates in the MPI import
@@ -219,31 +220,23 @@ public class FixForXmlFiles {
      * @param xmlFile The File object representing the XML file to be backed up.
      * @throws IOException If an I/O error occurs during the file reading or writing process.
      */
-    static void generateBackupFile(File xmlFile) {
+     static String generateBackupFile(File xmlFile) {
         LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS");
 
         String backupFileName = "meta_" + currentTime.format(formatter) + ".xml"; // Name of the backupfile
 
         File backupFile = new File(xmlFile.getParentFile(), backupFileName); // Creating a backupfile in the same directory
-        List<String> linesToWrite = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(xmlFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(backupFile))) {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                linesToWrite.add(line);
-            }
-
-            for (int i = 0; i < linesToWrite.size(); i++) {
-                writer.write(linesToWrite.get(i));
-                if (i < linesToWrite.size() - 1) {
-                    writer.newLine(); // Add a new line after each line except the last one
-                }
-            }
+        
+        
+        Path sourcePath = xmlFile.toPath();
+        Path destinationPath = backupFile.toPath();
+        try {
+            Files.copy(sourcePath, destinationPath, StandardCopyOption.COPY_ATTRIBUTES);
+            return destinationPath.toString();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-        
     }
 }

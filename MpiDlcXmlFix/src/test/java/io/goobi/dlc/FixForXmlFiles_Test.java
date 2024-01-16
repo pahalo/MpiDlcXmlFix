@@ -14,16 +14,15 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 import java.util.Arrays;
-
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
-import java.nio.file.Paths;
 
 class FixForXmlFiles_Test {
 	private static boolean logCreated = false;
-
+	private static final Logger logger = LogManager.getLogger(FixForXmlFiles.class);
 	@Test
 	void testProcessFiles() {
 		File testDirectory = new File("testDirectory");
@@ -71,7 +70,7 @@ class FixForXmlFiles_Test {
 	@Test
 	public void testProcessXmlFileValidFile() {
 		try {
-			File validXmlFile = new File("src/test/meta.xml");
+			File validXmlFile = new File("src/test/resources/meta.xml");
 
 			Element result = FixForXmlFiles.processXmlFile(validXmlFile);
 
@@ -141,40 +140,34 @@ class FixForXmlFiles_Test {
 
 	@Test
 	void testGenerateBackupFile() {
-		try {
-			// Creating temporary backupfiles
-			Path xmlDirectory = Paths.get("src/test/resources/");
-			Path tempXmlFile = Files.createTempFile(xmlDirectory, "tempXml", ".xml").toAbsolutePath().normalize()
-					.toRealPath();
+	    try {
+	        // Pfad zur ursprünglichen XML-Datei
+	    	String filePath = "/Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml";
+	    	File xmlFilePath = new File(filePath);
+	    	
+	    	// Sicherungskopie erstellen
+	    	String expectedBackupFilePath = FixForXmlFiles.generateBackupFile(xmlFilePath);
+	        File expectedBackupFile = new File(expectedBackupFilePath);
+	        
+	    	// Überprüfen, ob die Sicherungskopie existiert
+	    	assertTrue(expectedBackupFile.exists());
 
-			File xmlFile = tempXmlFile.toFile();
-
-			FixForXmlFiles.generateBackupFile(xmlFile);
-
-			LocalDateTime currentTime = LocalDateTime.now();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-			String expectedBackupFileName = "meta_" + currentTime.format(formatter) + ".xml";
-			File expectedBackupFile = new File(xmlFile.getParentFile(), expectedBackupFileName);
-			assertTrue(expectedBackupFile.exists());
-
-			// Checking if the content is the same
-			List<String> originalLines = Files.readAllLines(xmlFile.toPath());
-			List<String> backupLines = Files.readAllLines(expectedBackupFile.toPath());
-			assertEquals(originalLines, backupLines);
-			
-			//Deleting all Files
-//			Files.delete(tempXmlFile);
-//			String pathToDelete = "src/test/resources/"+ expectedBackupFileName;
-//            File fileToDelete = new File(pathToDelete);
-//            
-//			if (expectedBackupFile.exists()) {
-//				Files.delete(fileToDelete.toPath());
-//            }
-			
-		} catch (IOException e) {
-			fail("Exception thrown during test", e);
-		}
+	    	// Inhalt überprüfen
+	    	List<String> originalLines = Files.readAllLines(xmlFilePath.toPath());
+	    	logger.info(originalLines);
+	    	List<String> backupLines = Files.readAllLines(expectedBackupFile.toPath());
+	    	logger.info(backupLines);
+	    	
+	    	boolean areEqual = originalLines.equals(backupLines);
+	    	System.out.println("Lines are equal: " + areEqual);
+	    	
+	    	assertEquals(originalLines, backupLines);
+	    	
+	    } catch (IOException e) {
+	        fail("Exception thrown during test", e);
+	    }
 	}
+	
 
 	@BeforeEach
 	private void loggingTests() {
