@@ -101,6 +101,7 @@ class FixForXmlFiles_Test {
 	@Test
 	public void testFindDuplicatesWithDuplicates() {
 		try {
+			// Checking if Duplicates are found
 			List<String> xmlElementsList = Arrays.asList("<root xlink:href=\"00001.tif\"/>",
 					"<root xlink:href=\"00001.tif\"/>", "<root xlink:href=\"00002.tif\"/>",
 					"<root xlink:href=\"00003.tif\"/>", "<root xlink:href=\"00003.tif\"/>",
@@ -162,13 +163,13 @@ class FixForXmlFiles_Test {
 			assertEquals(originalLines, backupLines);
 			
 			//Deleting all Files
-			Files.delete(tempXmlFile);
-			String pathToDelete = "src/test/resources/"+ expectedBackupFileName;
-            File fileToDelete = new File(pathToDelete);
-            
-			if (expectedBackupFile.exists()) {
-				Files.delete(fileToDelete.toPath());
-            }
+//			Files.delete(tempXmlFile);
+//			String pathToDelete = "src/test/resources/"+ expectedBackupFileName;
+//            File fileToDelete = new File(pathToDelete);
+//            
+//			if (expectedBackupFile.exists()) {
+//				Files.delete(fileToDelete.toPath());
+//            }
 			
 		} catch (IOException e) {
 			fail("Exception thrown during test", e);
@@ -177,14 +178,14 @@ class FixForXmlFiles_Test {
 
 	@BeforeEach
 	private void loggingTests() {
-		if (logCreated) {
-			return;
-		}
-		try {
-			Configurator.initialize(null, "log4j2.xml");
-			logCreated = true;
-		} catch (Exception e) {
-			fail("Exception thrown during test", e);
-		}
+	    if (logCreated) {
+	        return;
+	    }
+	    try {
+	        Configurator.initialize(null, "log4j2.xml");
+	        logCreated = true;
+	    } catch (Exception e) {
+	        fail("Exception thrown during test", e);
+	    }
 	}
 }

@@ -123,7 +123,7 @@ public class FixForXmlFiles {
         
     	if (element != null) {
             StringBuilder elementString = new StringBuilder();
-
+            
             Namespace ns = element.getNamespace(); 
             String prefix = ns.getPrefix(); 
             // Checks for prefix
@@ -223,9 +223,9 @@ public class FixForXmlFiles {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 
-        String backupFileName = "meta_" + currentTime.format(formatter) + ".xml"; // Name der Backup-Datei
+        String backupFileName = "meta_" + currentTime.format(formatter) + ".xml"; // Name of the backupfile
 
-        File backupFile = new File(xmlFile.getParentFile(), backupFileName); // Backup-Datei im selben Verzeichnis erstellen
+        File backupFile = new File(xmlFile.getParentFile(), backupFileName); // Creating a backupfile in the same directory
         List<String> linesToWrite = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(xmlFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(backupFile))) {
