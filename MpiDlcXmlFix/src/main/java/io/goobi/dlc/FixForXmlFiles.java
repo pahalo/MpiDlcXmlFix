@@ -11,7 +11,6 @@ import org.jdom2.Namespace;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.Configurator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,7 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 /**
- * This class searches tif for duplicates in the MPI import
+ * This class searches tif duplicates in the MPI import
  * @param filesWithDuplicates Number of files with duplicates.
  * @param totalDuplicates Total count of duplicates.
  */
@@ -29,29 +28,40 @@ public class FixForXmlFiles {
 	private static int filesWithDuplicates = 0;
 	private static int totalDuplicates = 0;
 	
+	/**
+	 * The main entry point of the application for processing XML files
+	 * @param args Directory to check
+	 */
     public static void main(String[] args) {
-    	Configurator.setRootLevel(org.apache.logging.log4j.Level.DEBUG);
+    	
     	StringBuilder stringBuilder = new StringBuilder();
+    	// List to store parent directory names of files with duplicates
     	List<String> parentDirectory = new ArrayList<>();
     	
         if (args.length != 1) {
         	logger.error("Please specify only one directory."); 
         } else {
+        	
         	 File directory = new File(args[0]).getAbsoluteFile();
              if (directory.exists() && directory.isDirectory()) {
+            	// Process files in the directory that have the specified XML pattern
              	List<File> filesWithMetaXml = processFiles(directory);
+             	 // Process each XML file and identify duplicates
              	for (File file : filesWithMetaXml) {
              	    Element rootElement = processXmlFile(file);
              	    
              	   if (rootElement != null) {
-             		   List<String> xmlElementsList = collectXmlElements(rootElement, file);
+             		   List<String> xmlElementsList = collectXmlElements(rootElement);
+             		   // Find duplicates and obtain the parent directory
              		   String parentDir = findDuplicates(xmlElementsList, file);
                        if (parentDir != null) {
                            parentDirectory.add(parentDir);
+                           // Generate BackupFiles of the Files with 
                            //generateBackupFile(file);
                        }
              		}
              	}
+             	 // Log the number of files with duplicates and the total count of duplicates
                 logger.info("Number of files with duplicates: " + filesWithDuplicates); 
                 logger.info("Total count of duplicates: " + totalDuplicates); 
 
@@ -83,7 +93,7 @@ public class FixForXmlFiles {
             	// Finds all the files that are named meta.xml
                 for (File file : files) {
                 	if (file.isFile() && file.getName().toLowerCase().equals("meta.xml")) {
-                		logger.trace("meta.xml found");
+                		//logger.trace("meta.xml found");
                         filesWithMetaXml.add(file);
                     } else if (file.isDirectory()) {
                         filesWithMetaXml.addAll(processFiles(file));
@@ -104,11 +114,12 @@ public class FixForXmlFiles {
         try {
             SAXBuilder sax = new SAXBuilder();
             Document doc = sax.build(file);
+            // Collects the rootelement
             Element rootElement = doc.getRootElement();
-            logger.trace("root element found: " + rootElement);
+            //logger.trace("root element found: " + rootElement);
             return rootElement;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("processXmlFile exception" + e);
             return null;
         }
     }
@@ -119,54 +130,58 @@ public class FixForXmlFiles {
      * @param xmlFile The XML file currently being processed.
      * @return List of collected XML elements as strings.
      */
-    static List<String> collectXmlElements(Element element, File xmlFile) {
+    static List<String> collectXmlElements(Element element) {
         List<String> xmlElementsList = new ArrayList<>();
-        
     	if (element != null) {
             StringBuilder elementString = new StringBuilder();
             
             Namespace ns = element.getNamespace(); 
             String prefix = ns.getPrefix(); 
+            
             // Checks for prefix
             if (!prefix.isEmpty()) {
-                elementString.append("<").append(prefix).append(":").append(element.getName());
-            	logger.trace("Prefix found");
+                elementString.append(prefix).append(":").append(element.getName());
+            	//logger.trace("Prefix found");
             } else {
-                elementString.append("<").append(element.getName());
+                elementString.append(element.getName());
                 
             }
+            
             // Checks for attributes
             List<Attribute> attributes = element.getAttributes();
             for (Attribute attribute : attributes) {
-            	logger.trace("Adding attribute");
+            	//logger.trace("Adding attribute");
+            	System.out.println(attribute.getValue());
                 elementString.append(" ").append(attribute.getQualifiedName()).append("=\"").append(attribute.getValue()).append("\"");
+                //logger.debug(elementString);
+                
+                    // Überprüfe, ob der Attributwert mit ".tif" endet
+                    if (attribute.getValue().endsWith(".tif")) {
+                        System.out.println("tif"+attribute.getValue());
+                        elementString.append(" ").append(attribute.getQualifiedName()).append("=\"").append(attribute.getValue()).append("\"");
+                    }
+                
             }
             
-            List<Element> children = element.getChildren();
-
+            List<Element> children = element.getChildren();	
+            
             if (!children.isEmpty()) {
-                elementString.append(">");
-
                 xmlElementsList.add(elementString.toString());
 
                 for (Element child : children) {
-                	xmlElementsList.addAll(collectXmlElements(child, xmlFile));
+                	xmlElementsList.addAll(collectXmlElements(child));
                 }
 
                 if (!prefix.isEmpty()) {
-                    xmlElementsList.add("</" + prefix + ":" + element.getName() + ">");
+                    xmlElementsList.add( prefix + ":" + element.getName());
                 } else {
-                    xmlElementsList.add("</" + element.getName() + ">");
+                    xmlElementsList.add(element.getName());
                 }
-            } else {
-                if (!prefix.isEmpty()) {
-                    xmlElementsList.add(elementString.append("/>").toString());
-                } else {
-                    xmlElementsList.add(elementString.append("/>").toString());
-                }
+            } else {  
+                 	xmlElementsList.add(elementString.toString());             
             }
         }
-    	System.out.println(xmlElementsList);
+    	//System.out.println(xmlElementsList);
     	return xmlElementsList;
     }
 
@@ -193,7 +208,7 @@ public class FixForXmlFiles {
                     if (!hrefs.add(href)) {
                         duplicatesFound = true;
                         if (!hrefDuplicatesList.contains(href)) {
-                        	logger.trace("Duplicate Found that is not in List: " + href);
+                        	//logger.trace("Duplicate Found that is not in List: " + href);
                             hrefDuplicatesList.add(href);
                         }
                     }
@@ -204,12 +219,12 @@ public class FixForXmlFiles {
         if (duplicatesFound) {
         	filesWithDuplicates++;
             totalDuplicates += hrefDuplicatesList.size();
-            logger.trace(xmlFile.getAbsolutePath()); 
+            //logger.trace(xmlFile.getAbsolutePath()); 
             File directoryAbove = xmlFile.getParentFile();
             parentDirectory.add(directoryAbove.getName());
-            for (String element : hrefDuplicatesList) {
-            	logger.info("   " + element);
-            }
+            //for (String element : hrefDuplicatesList) {
+            	//logger.info("   " + element);
+            //}
             hrefDuplicatesList.clear();
             return directoryAbove.getName();
         } 
@@ -221,23 +236,19 @@ public class FixForXmlFiles {
      * @param xmlFile The File object representing the XML file to be backed up.
      * @throws IOException If an I/O error occurs during the file reading or writing process.
      */
-     static String generateBackupFile(File xmlFile) {
+     static Path generateBackupFile(File xmlFile) throws IOException {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS");
-
-        String backupFileName = "meta_" + currentTime.format(formatter) + ".xml"; // Name of the backupfile
-
-        File backupFile = new File(xmlFile.getParentFile(), backupFileName); // Creating a backupfile in the same directory
         
+        // Name of the backupfile
+        String backupFileName = "meta_" + currentTime.format(formatter) + ".xml"; 
+
+        // Creating a backupfile in the same directory
+        File backupFile = new File(xmlFile.getParentFile(), backupFileName); 
         
         Path sourcePath = xmlFile.toPath();
         Path destinationPath = backupFile.toPath();
-        try {
-            Files.copy(sourcePath, destinationPath, StandardCopyOption.COPY_ATTRIBUTES);
-            return destinationPath.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return Files.copy(sourcePath, destinationPath, StandardCopyOption.COPY_ATTRIBUTES);
+        
     }
 }

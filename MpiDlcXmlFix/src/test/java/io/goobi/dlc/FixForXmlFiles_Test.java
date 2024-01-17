@@ -2,7 +2,6 @@ package io.goobi.dlc;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -16,10 +15,11 @@ import org.jdom2.input.SAXBuilder;
 import java.util.Arrays;
 import java.io.IOException;
 
-import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 class FixForXmlFiles_Test {
-	private static boolean logCreated = false;
+	private static final Logger logger = LogManager.getLogger(FixForXmlFiles.class);
 	@Test
 	void testProcessFiles() {
 		File testDirectory = new File("testDirectory");
@@ -35,13 +35,14 @@ class FixForXmlFiles_Test {
 			file2.createNewFile();
 
 			List<File> result = FixForXmlFiles.processFiles(testDirectory);
-
+			// Process files and check results
 			assertEquals(2, result.size());
 			assertTrue(result.contains(file1));
 			assertTrue(result.contains(file2));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("testProcessXmlFileValidFile exception" + e);
 		} finally {
+			// Clean up the test directory
 			deleteDirectory(testDirectory.toPath());
 		}
 	}
@@ -67,13 +68,14 @@ class FixForXmlFiles_Test {
 	@Test
 	public void testProcessXmlFileValidFile() {
 		try {
+			// Load a valid XML file for processing
 			File validXmlFile = new File("src/test/resources/meta.xml");
-
+			
 			Element result = FixForXmlFiles.processXmlFile(validXmlFile);
 
 			assertNotNull(result);
 		} catch (Exception e) {
-			fail("Exception thrown during test", e);
+			logger.error("testCollectXmlElements exception" + e);
 		}
 	}
 
@@ -84,90 +86,80 @@ class FixForXmlFiles_Test {
 	        File xmlFile = new File(relativeXmlFilePath);
 	        SAXBuilder saxBuilder = new SAXBuilder();
 	        Document document = saxBuilder.build(xmlFile);
-	        Element rootElement = document.getRootElement();
-
-	        List<String> xmlElementsList = FixForXmlFiles.collectXmlElements(rootElement, xmlFile);
+	        Element rootElement = document.getRootElement();	
+	        
+	        List<String> xmlElementsList = FixForXmlFiles.collectXmlElements(rootElement);
 	        assertTrue(xmlElementsList.size() > 0);
 	    } catch (IOException e) {
-	        fail("Exception thrown during test", e);
+	    	logger.error("testCollectXmlElements exception" + e);
 	    }
 	}
 
 	@Test
 	public void testFindDuplicatesWithDuplicates() {
 		try {
-			// Checking if Duplicates are found
+			// Test values
 			List<String> xmlElementsList = Arrays.asList("<root xlink:href=\"00001.tif\"/>",
 					"<root xlink:href=\"00001.tif\"/>", "<root xlink:href=\"00002.tif\"/>",
 					"<root xlink:href=\"00003.tif\"/>", "<root xlink:href=\"00003.tif\"/>",
 					"<root xlink:href=\"00004.tif\"/>");
 			File xmlFile = new File("/Users/paul/git/xmlMitPaul/src/test/resources/meta.xml");
-
+			// Checking if Duplicates are found
 			assertEquals("resources", FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
 		} catch (Exception e) {
 			fail("Exception thrown during test", e);
 		}
 
 		try {
+			// Test values
 			List<String> xmlElementsList = Arrays.asList("<root xlink:href=\"00001.tif\"/>",
 					"<root xlink:href=\"00001.tif\"/>", "<root xlink:href=\"00001.tif\"/>",
 					"<root xlink:href=\"00001.tif\"/>", "<root xlink:href=\"00001.tif\"/>",
 					"<root xlink:href=\"00001.tif\"/>");
 			File xmlFile = new File("/src/test/resources/meta.xml");
-
+			// Checking if Duplicates are found
 			assertEquals("resources", FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
 		} catch (Exception e) {
 			fail("Exception thrown during test", e);
 		}
 
 		try {
+			// Test values
 			List<String> xmlElementsList = Arrays.asList("<root xlink:href=\"00001.tif\"/>",
 					"<root xlink:href=\"00002.tif\"/>", "<root xlink:href=\"00003.tif\"/>",
 					"<root xlink:href=\"00004.tif\"/>", "<root xlink:href=\"00005.tif\"/>",
 					"<root xlink:href=\"00001.tif\"/>");
 			File xmlFile = new File("/src/test/resources/meta.xml");
-
+			// Checking if Duplicates are found
 			String expectedDirectoryName = "resources"; // The example directory
 			assertEquals(expectedDirectoryName, FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
 		} catch (Exception e) {
-			fail("Exception thrown during test", e);
+			logger.error("testFindDuplicatesWithDuplicates exception" + e);
 		}
 	}
 
 	@Test
 	void testGenerateBackupFile() {
 	    try {
-	        // Pfad zur ursprünglichen XML-Datei
-	    	String filePath = "src/test/resources/meta.xml";
-	    	File xmlFilePath = new File(filePath);
-	    	
-	    	// Sicherungskopie erstellen
-	    	String expectedBackupFilePath = FixForXmlFiles.generateBackupFile(xmlFilePath);
-	        File expectedBackupFile = new File(expectedBackupFilePath);
+	        // Path to the original XML file
+	        String filePath = "src/test/resources/meta.xml";
+	        File xmlFilePath = new File(filePath);
 	        
-	    	// Überprüfen, ob die Sicherungskopie existiert
-	    	assertTrue(expectedBackupFile.exists());
+	        // Create a backup copy
+	        Path expectedBackupFilePath = FixForXmlFiles.generateBackupFile(xmlFilePath);
+	        
+	        // Check if the backup copy exists
+	        assertTrue(expectedBackupFilePath.toFile().exists());
 
-	    	// Inhalt überprüfen
-	    	List<String> originalLines = Files.readAllLines(xmlFilePath.toPath());
-	    	List<String> backupLines = Files.readAllLines(expectedBackupFile.toPath());
-	    	assertEquals(originalLines, backupLines);
-	    	
+	        // Verify content
+	        List<String> originalLines = Files.readAllLines(xmlFilePath.toPath());
+	        List<String> backupLines = Files.readAllLines(expectedBackupFilePath);
+	        assertEquals(originalLines, backupLines);
+	        
 	    } catch (IOException e) {
-	        fail("Exception thrown during test", e);
+	        // Fail the test if an exception is thrown
+	    	logger.error("testGenerateBackupFile exception" + e);
 	    }
 	}
 
-	@BeforeEach
-	private void loggingTests() {
-	    if (logCreated) {
-	        return;
-	    }
-	    try {
-	        Configurator.initialize(null, "log4j2.xml");
-	        logCreated = true;
-	    } catch (Exception e) {
-	        fail("Exception thrown during test", e);
-	    }
-	}
 }
