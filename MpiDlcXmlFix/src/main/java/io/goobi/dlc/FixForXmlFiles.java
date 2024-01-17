@@ -7,7 +7,6 @@ import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
-import org.jdom2.Namespace;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,9 +50,9 @@ public class FixForXmlFiles {
              	    Element rootElement = processXmlFile(file);
              	    
              	   if (rootElement != null) {
-             		   List<String> xmlElementsList = collectXmlElements(rootElement);
+             		   List<String> tifElementsList = collectXmlElements(rootElement);
              		   // Find duplicates and obtain the parent directory
-             		   String parentDir = findDuplicates(xmlElementsList, file);
+             		   String parentDir = findDuplicates(tifElementsList, file);
                        if (parentDir != null) {
                            parentDirectory.add(parentDir);
                            // Generate BackupFiles of the Files with 
@@ -124,112 +123,81 @@ public class FixForXmlFiles {
         }
     }
     
-    /**
-     * Collects XML elements recursively.
-     * @param element The XML element being processed.
-     * @param xmlFile The XML file currently being processed.
-     * @return List of collected XML elements as strings.
-     */
-    static List<String> collectXmlElements(Element element) {
-        List<String> xmlElementsList = new ArrayList<>();
-    	if (element != null) {
-            StringBuilder elementString = new StringBuilder();
-            
-            Namespace ns = element.getNamespace(); 
-            String prefix = ns.getPrefix(); 
-            
-            // Checks for prefix
-            if (!prefix.isEmpty()) {
-                elementString.append(prefix).append(":").append(element.getName());
-            	//logger.trace("Prefix found");
-            } else {
-                elementString.append(element.getName());
-                
-            }
-            
-            // Checks for attributes
-            List<Attribute> attributes = element.getAttributes();
-            for (Attribute attribute : attributes) {
-            	//logger.trace("Adding attribute");
-            	System.out.println(attribute.getValue());
-                elementString.append(" ").append(attribute.getQualifiedName()).append("=\"").append(attribute.getValue()).append("\"");
-                //logger.debug(elementString);
-                
-                    // Überprüfe, ob der Attributwert mit ".tif" endet
-                    if (attribute.getValue().endsWith(".tif")) {
-                        System.out.println("tif"+attribute.getValue());
-                        elementString.append(" ").append(attribute.getQualifiedName()).append("=\"").append(attribute.getValue()).append("\"");
-                    }
-                
-            }
-            
-            List<Element> children = element.getChildren();	
-            
-            if (!children.isEmpty()) {
-                xmlElementsList.add(elementString.toString());
+     /**
+      * Collects XML elements with attributes ending in ".tif".
+      * @param element The XML element to start collecting from.
+      * @return List of attribute values ending in ".tif".
+      */
+     static List<String> collectXmlElements(Element element) {
+         // List to store .tif elements
+         List<String> tifElementsList = new ArrayList<>();
 
-                for (Element child : children) {
-                	xmlElementsList.addAll(collectXmlElements(child));
-                }
+         // Check if the element is not null
+         if (element != null) {
+             // Check attributes of the element
+             List<Attribute> attributes = element.getAttributes();
+             for (Attribute attribute : attributes) {
+                 // Check if the attribute value ends with ".tif"
+                 if (attribute.getValue().endsWith(".tif")) {
+                     tifElementsList.add(attribute.getValue());
+                 }
+             }
 
-                if (!prefix.isEmpty()) {
-                    xmlElementsList.add( prefix + ":" + element.getName());
-                } else {
-                    xmlElementsList.add(element.getName());
-                }
-            } else {  
-                 	xmlElementsList.add(elementString.toString());             
-            }
-        }
-    	//System.out.println(xmlElementsList);
-    	return xmlElementsList;
-    }
+             // Check children of the element
+             List<Element> children = element.getChildren();
+             for (Element child : children) {
+                 // Add all .tif elements from recursive calls
+                 tifElementsList.addAll(collectXmlElements(child));
+             }
+         }
+
+         // Return the list of .tif elements
+         return tifElementsList;
+     }
+
 
     /**
-     * Finds duplicates of xlink:href attributes within XML elements.
-     * @param xmlElementsList List of XML elements.
+     * Finds duplicates of tif attributes within XML elements.
+     * @param tifElementsList List of tif elements.
      * @param xmlFile The XML file currently being processed.
      * @return Name of the parent directory if duplicates are found, otherwise null.
      */
-    static String findDuplicates(List<String> xmlElementsList, File xmlFile) {
-        boolean duplicatesFound = false;
-        Set<String> hrefs = new HashSet<>();
-        List<String> hrefDuplicatesList = new ArrayList<>();
-        List<String> parentDirectory = new ArrayList<>();
+     static String findDuplicates(List<String> tifElementsList, File xmlFile) {
+    	    boolean duplicatesFound = false;
+    	    Set<String> tifValues = new HashSet<>();
+    	    List<String> tifDuplicatesList = new ArrayList<>();
+    	    List<String> parentDirectory = new ArrayList<>();
 
-        // Searches for all lines where xlink:href is used and might add them to the duplicates list
-        for (String element : xmlElementsList) {
-            int hrefIndex = element.indexOf("xlink:href=\"");
-            if (hrefIndex != -1) {
-                int start = hrefIndex + "xlink:href=\"".length();
-                int end = element.indexOf("\"", start);
-                if (end != -1) {
-                    String href = element.substring(start, end);
-                    if (!hrefs.add(href)) {
-                        duplicatesFound = true;
-                        if (!hrefDuplicatesList.contains(href)) {
-                        	//logger.trace("Duplicate Found that is not in List: " + href);
-                            hrefDuplicatesList.add(href);
-                        }
-                    }
-                }
-            }
-        }
+    	    // Searches for .tif values and adds them to the duplicates list
+    	    for (String tifElement : tifElementsList) {
+    	        if (tifElement.endsWith(".tif")) {	        	
+    	        	// Extract the numeric part of the file name by removing the last 4 characters (".tif")
+    	            String tifValue = tifElement.substring(0, tifElement.length() - 4);
+    	            if (!tifValues.add(tifValue)) {
+    	                duplicatesFound = true;
+    	                if (!tifDuplicatesList.contains(tifValue)) {
+    	                    //logger.trace("Duplicate Found that is not in List: " + tifValue);
+    	                    tifDuplicatesList.add(tifValue);
+    	                }
+    	            }
+    	        }
+    	    }
 
-        if (duplicatesFound) {
-        	filesWithDuplicates++;
-            totalDuplicates += hrefDuplicatesList.size();
-            //logger.trace(xmlFile.getAbsolutePath()); 
-            File directoryAbove = xmlFile.getParentFile();
-            parentDirectory.add(directoryAbove.getName());
-            //for (String element : hrefDuplicatesList) {
-            	//logger.info("   " + element);
-            //}
-            hrefDuplicatesList.clear();
-            return directoryAbove.getName();
-        } 
-        return null;
-    }
+    	    if (duplicatesFound) {
+    	        filesWithDuplicates++;
+    	        totalDuplicates += tifDuplicatesList.size();
+    	        //logger.trace(xmlFile.getAbsolutePath());
+    	        File directoryAbove = xmlFile.getParentFile();
+    	        parentDirectory.add(directoryAbove.getName());
+    	        //for (String tifValue : tifDuplicatesList) {
+    	            //logger.info("   " + tifValue + ".tif");
+    	        //}
+    	        tifDuplicatesList.clear();
+    	        return directoryAbove.getName();
+    	    }
+    	    return null;
+    	}
+
     
     /**
      * Generates a backup file for the given XML file by creating a copy with a timestamp in the filename.

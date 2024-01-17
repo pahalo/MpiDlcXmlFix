@@ -37,7 +37,7 @@ public class DeleteCreatedDuplicateFiles {
         // Log the total number of duplicate files found and deleted
         logger.info("Total duplicate files deleted: " + duplicateFiles);
     }
-
+    
     /**
      * Process files in the given directory, deleting files that match a specific pattern.
      * @param directory The directory to process.

@@ -24223,3 +24223,36 @@
 18:02:42.268 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 11
 18:02:42.270 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 57
 18:02:42.270 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id:185478 185211 185023 185447 184595 187122 186004 185681 186460 183112 184939"
+18:06:34.516 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 11
+18:06:34.518 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 57
+18:06:34.518 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id:185478 185211 185023 185447 184595 187122 186004 185681 186460 183112 184939"
+18:08:47.075 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 0
+18:08:47.076 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 0
+18:08:47.076 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id:"
+18:11:25.112 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 0
+18:11:25.114 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 0
+18:11:25.114 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id:"
+18:11:43.684 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 0
+18:11:43.686 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 0
+18:11:43.686 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id:"
+18:14:13.971 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 0
+18:14:13.972 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 0
+18:14:13.972 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id:"
+18:16:46.757 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 11
+18:16:46.758 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 57
+18:16:46.758 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id:185478 185211 185023 185447 184595 187122 186004 185681 186460 183112 184939"
+18:22:20.277 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+18:22:29.905 [main] ERROR io.goobi.dlc.FixForXmlFiles - processXmlFile exceptionjava.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml (No such file or directory)
+18:22:29.917 [main] ERROR io.goobi.dlc.FixForXmlFiles - testCollectXmlElements exceptionjava.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml (No such file or directory)
+18:23:08.475 [main] ERROR io.goobi.dlc.FixForXmlFiles - testCollectXmlElements exceptionjava.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml (No such file or directory)
+18:24:05.565 [main] ERROR io.goobi.dlc.FixForXmlFiles - testCollectXmlElements exceptionjava.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml (No such file or directory)
+18:24:37.411 [main] ERROR io.goobi.dlc.FixForXmlFiles - testCollectXmlElements exceptionjava.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml (No such file or directory)
+18:24:48.015 [main] ERROR io.goobi.dlc.FixForXmlFiles - testCollectXmlElements exceptionjava.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml (No such file or directory)
+18:26:41.696 [main] ERROR io.goobi.dlc.FixForXmlFiles - testCollectXmlElements exceptionjava.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml (No such file or directory)
+18:28:26.841 [main] ERROR io.goobi.dlc.FixForXmlFiles - testCollectXmlElements exceptionjava.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml (No such file or directory)
+18:28:26.849 [main] ERROR io.goobi.dlc.FixForXmlFiles - testGenerateBackupFile exceptionjava.nio.file.NoSuchFileException: src/test/resources/test/meta.xml
+18:28:47.098 [main] ERROR io.goobi.dlc.FixForXmlFiles - testCollectXmlElements exceptionjava.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/meta.xml (No such file or directory)
+18:48:17.467 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+18:49:03.135 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 21
+18:49:11.702 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+18:49:25.926 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0

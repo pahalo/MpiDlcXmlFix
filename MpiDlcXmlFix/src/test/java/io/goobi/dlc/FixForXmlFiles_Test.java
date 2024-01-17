@@ -69,7 +69,7 @@ class FixForXmlFiles_Test {
 	public void testProcessXmlFileValidFile() {
 		try {
 			// Load a valid XML file for processing
-			File validXmlFile = new File("src/test/resources/meta.xml");
+			File validXmlFile = new File("src/test/resources/183112/meta.xml");
 			
 			Element result = FixForXmlFiles.processXmlFile(validXmlFile);
 
@@ -82,7 +82,7 @@ class FixForXmlFiles_Test {
 	@Test
 	public void testCollectXmlElements() throws Exception {
 	    try {
-	        String relativeXmlFilePath = "src/test/resources/meta.xml";
+	        String relativeXmlFilePath = "src/test/resources/186004/meta.xml";
 	        File xmlFile = new File(relativeXmlFilePath);
 	        SAXBuilder saxBuilder = new SAXBuilder();
 	        Document document = saxBuilder.build(xmlFile);
@@ -103,9 +103,10 @@ class FixForXmlFiles_Test {
 					"<root xlink:href=\"00001.tif\"/>", "<root xlink:href=\"00002.tif\"/>",
 					"<root xlink:href=\"00003.tif\"/>", "<root xlink:href=\"00003.tif\"/>",
 					"<root xlink:href=\"00004.tif\"/>");
-			File xmlFile = new File("/Users/paul/git/xmlMitPaul/src/test/resources/meta.xml");
+			File xmlFile = new File("/Users/paul/git/xmlMitPaul/src/test/resources/183112/meta.xml");
 			// Checking if Duplicates are found
-			assertEquals("resources", FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
+			String expectedDirectoryName = "183112"; // The example directory
+			assertEquals(expectedDirectoryName, FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
 		} catch (Exception e) {
 			fail("Exception thrown during test", e);
 		}
@@ -116,9 +117,10 @@ class FixForXmlFiles_Test {
 					"<root xlink:href=\"00001.tif\"/>", "<root xlink:href=\"00001.tif\"/>",
 					"<root xlink:href=\"00001.tif\"/>", "<root xlink:href=\"00001.tif\"/>",
 					"<root xlink:href=\"00001.tif\"/>");
-			File xmlFile = new File("/src/test/resources/meta.xml");
+			File xmlFile = new File("/src/test/resources/183112/meta.xml");
 			// Checking if Duplicates are found
-			assertEquals("resources", FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
+			String expectedDirectoryName = "183112"; // The example directory
+			assertEquals(expectedDirectoryName, FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
 		} catch (Exception e) {
 			fail("Exception thrown during test", e);
 		}
@@ -129,9 +131,9 @@ class FixForXmlFiles_Test {
 					"<root xlink:href=\"00002.tif\"/>", "<root xlink:href=\"00003.tif\"/>",
 					"<root xlink:href=\"00004.tif\"/>", "<root xlink:href=\"00005.tif\"/>",
 					"<root xlink:href=\"00001.tif\"/>");
-			File xmlFile = new File("/src/test/resources/meta.xml");
+			File xmlFile = new File("/src/test/resources/183112/meta.xml");
 			// Checking if Duplicates are found
-			String expectedDirectoryName = "resources"; // The example directory
+			String expectedDirectoryName = "183112"; // The example directory
 			assertEquals(expectedDirectoryName, FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
 		} catch (Exception e) {
 			logger.error("testFindDuplicatesWithDuplicates exception" + e);
@@ -142,15 +144,13 @@ class FixForXmlFiles_Test {
 	void testGenerateBackupFile() {
 	    try {
 	        // Path to the original XML file
-	        String filePath = "src/test/resources/meta.xml";
+	        String filePath = "src/test/resources/183112/meta.xml";
 	        File xmlFilePath = new File(filePath);
 	        
 	        // Create a backup copy
 	        Path expectedBackupFilePath = FixForXmlFiles.generateBackupFile(xmlFilePath);
-	        
 	        // Check if the backup copy exists
 	        assertTrue(expectedBackupFilePath.toFile().exists());
-
 	        // Verify content
 	        List<String> originalLines = Files.readAllLines(xmlFilePath.toPath());
 	        List<String> backupLines = Files.readAllLines(expectedBackupFilePath);
@@ -161,5 +161,4 @@ class FixForXmlFiles_Test {
 	    	logger.error("testGenerateBackupFile exception" + e);
 	    }
 	}
-
 }
