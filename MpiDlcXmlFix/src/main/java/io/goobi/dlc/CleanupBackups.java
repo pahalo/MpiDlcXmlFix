@@ -54,8 +54,8 @@ public class CleanupBackups {
                     if (file.isDirectory()) {
                         // Recursively process files in subdirectories
                         numberOfBackups += processFiles(file);
-                    } else if (file.getName().contains("meta_") && file.getName().endsWith(".xml")) {
-                        // Log the deletion of each duplicate file
+                        // If the filename is in this format: meta.xml.yyyy-MM-dd-HHmmssSSS then it will be deleted
+                    } else if (file.getName().matches("meta\\.xml\\.\\d+.*")) {
                         logger.trace("Deleting file: " + file.getAbsolutePath());
                         numberOfBackups++;
                         // Delete the file

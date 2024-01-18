@@ -80,7 +80,7 @@ class FixForXmlFiles_Test {
 
             assertNotNull(result);
         } catch (Exception e) {
-            logger.error("testCollectXmlElements exception" + e);
+            logger.error("testCollectXmlElements exception", e);
         }
     }
 
@@ -152,7 +152,7 @@ class FixForXmlFiles_Test {
             // Checking if Duplicates are found
             assertEquals(expectedDirectoryName, fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
         } catch (Exception e) {
-            logger.error("testFindDuplicatesWithDuplicates exception" + e);
+            logger.error("testFindDuplicatesWithDuplicates exception", e);
         }
 
     }

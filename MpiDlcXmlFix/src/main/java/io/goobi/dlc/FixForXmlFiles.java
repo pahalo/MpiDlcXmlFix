@@ -73,7 +73,6 @@ public class FixForXmlFiles {
                     }
                 }
 
-                // Log the number of files with duplicates and the total count of duplicates
                 logger.info("Number of files with duplicates: " + fixer.filesWithDuplicates);
                 logger.info("Total count of duplicates: " + fixer.totalDuplicates);
 
@@ -132,12 +131,10 @@ public class FixForXmlFiles {
             Document doc = sax.build(file);
             // Collects the rootelement
             Element rootElement = doc.getRootElement();
-            logger.trace("root element found: " + rootElement);
+            logger.trace("Root element found: " + rootElement);
             return rootElement;
         } catch (JDOMException | IOException e) {
-            // TODO: bessere Meldung (en)
-            // TODO: Exceptions immer mit Komma
-            logger.error("processXmlFile exception", e);
+            logger.error("No root element found", e);
             return null;
         }
     }
@@ -157,19 +154,25 @@ public class FixForXmlFiles {
             // Check attributes of the element
             List<Attribute> attributes = element.getAttributes();
             for (Attribute attribute : attributes) {
-
-                // TODO: mal prüfen ob nötig
-                // Check if the attribute value ends with ".tif"
-                if (attribute.getValue().endsWith(".tif")) {
-                    tifElementsList.add(attribute.getValue());
+            	// add .tif attributes to list
+            	String attributeValue = attribute.getValue();
+                if (attributeValue.endsWith(".tif")) {
+                    tifElementsList.add(attributeValue);
                 }
             }
 
             // Check children of the element
             List<Element> children = element.getChildren();
             for (Element child : children) {
-                // Add all .tif elements from recursive calls
-                tifElementsList.addAll(collectXmlElements(child));
+                // Recursively collect .tif elements
+                List<String> childTifElements = collectXmlElements(child);
+
+                // Filter and add only the elements that end with ".tif"
+                for (String tifElement : childTifElements) {
+                    if (tifElement.endsWith(".tif")) {
+                        tifElementsList.add(tifElement);
+                    }
+                }
             }
         }
 
@@ -188,37 +191,29 @@ public class FixForXmlFiles {
         boolean duplicatesFound = false;
 
         // TODO: überlegen ob list oder map
-        Set<String> tifValues = new HashSet<>();
+        List<String> tifValues = new ArrayList<>();
         List<String> tifDuplicatesList = new ArrayList<>();
         List<String> parentDirectory = new ArrayList<>();
 
-        // Searches for .tif values and adds them to the duplicates list
+        // Adds the .tif values to the list if they are duplicates and not already in the list
         for (String tifElement : tifElementsList) {
-
-            // TODO: prüfen ob das nötig ist
-            if (tifElement.endsWith(".tif")) {
-                if (!tifValues.add(tifElement)) {
-                    duplicatesFound = true;
-                    if (!tifDuplicatesList.contains(tifElement)) {
-                        logger.trace("Duplicate found that is not in list: " + tifElement);
-                        tifDuplicatesList.add(tifElement);
-                    }
+            if (!tifValues.contains(tifElement)) {
+                tifValues.add(tifElement);
+            } else {
+                duplicatesFound = true;
+                if (!tifDuplicatesList.contains(tifElement)) {
+                    logger.trace("Duplicate found that is not in list: " + tifElement);
+                    tifDuplicatesList.add(tifElement);
+                    logger.info("   " + tifElement);
                 }
             }
         }
-
-        // TODO: mal prüfen ob zusammengezogen werden kann
-        if (duplicatesFound) {
-            filesWithDuplicates++;
-            totalDuplicates += tifDuplicatesList.size();
-            logger.trace(xmlFile.getAbsolutePath());
-            File directoryAbove = xmlFile.getParentFile();
-            parentDirectory.add(directoryAbove.getName());
-            for (String tifValue : tifDuplicatesList) {
-                logger.info("   " + tifValue + ".tif");
-            }
-            tifDuplicatesList.clear();
-        }
+        
+        filesWithDuplicates++;
+        logger.trace(xmlFile.getAbsolutePath());
+        totalDuplicates += tifDuplicatesList.size();
+        File directoryAbove = xmlFile.getParentFile();
+        parentDirectory.add(directoryAbove.getName());
         return duplicatesFound;
     }
 
@@ -230,11 +225,10 @@ public class FixForXmlFiles {
      */
     Path generateBackupFile(File xmlFile) throws IOException {
         LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HHmmssSSS");
 
         // Name of the backupfile
-        // TODO: besser meta.xml.TIMESTAMP -> workflow channel beitreten und fragen, wie dort die backups heissen (Stelle im Code)
-        String backupFileName = "meta_" + currentTime.format(formatter) + ".xml";
+        String backupFileName = "meta.xml." + currentTime.format(formatter);
 
         // Creating a backupfile in the same directory
         File backupFile = new File(xmlFile.getParentFile(), backupFileName);
@@ -242,7 +236,8 @@ public class FixForXmlFiles {
         Path sourcePath = xmlFile.toPath();
         Path destinationPath = backupFile.toPath();
 
-        // TODO: hier noch loggen
+        logger.trace(sourcePath);
+        logger.trace(destinationPath);
         return Files.copy(sourcePath, destinationPath, StandardCopyOption.COPY_ATTRIBUTES);
 
     }
