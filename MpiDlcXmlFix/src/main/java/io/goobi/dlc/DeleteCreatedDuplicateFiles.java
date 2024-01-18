@@ -8,7 +8,7 @@ import org.apache.logging.log4j.core.config.Configurator;
 
 /**
  * This class deletes duplicate files created during a specific process.
- * It looks for files in a given directory that match a certain pattern and deletes them.
+ * It looks for files in a given directory and its subdirectories that match a certain pattern and deletes them.
  */
 public class DeleteCreatedDuplicateFiles {
 
@@ -27,32 +27,39 @@ public class DeleteCreatedDuplicateFiles {
             // Log an error if the number of specified directories is not equal to one
             logger.error("Please specify only one directory.");
         } else {
-            // Process the specified directory if it exists and is a directory
+            // Process the specified directory and its subdirectories if it exists
             File directory = new File(args[0]).getAbsoluteFile();
-            if (directory.exists() && directory.isDirectory()) {
-                duplicateFiles = processFiles(directory);
+            if (directory.exists()) {
+            	DeleteCreatedDuplicateFiles fileProcessor = new DeleteCreatedDuplicateFiles();
+                duplicateFiles = fileProcessor.processFiles(directory);
+            } else {
+                // Log an error if the specified path is not a valid directory
+                logger.error("Please specify a valid directory.");
             }
         }
 
         // Log the total number of duplicate files found and deleted
         logger.info("Total duplicate files deleted: " + duplicateFiles);
     }
-    
+
     /**
-     * Process files in the given directory, deleting files that match a specific pattern.
+     * Process files in the given directory and its subdirectories, deleting files that match a specific pattern.
      * @param directory The directory to process.
      * @return The number of duplicate files deleted.
      */
-    private static int processFiles(File directory) {
+    private int processFiles(File directory) {
         int duplicateFiles = 0;
 
         if (directory.isDirectory()) {
-            // List all files in the directory
+            // List all files in the directory, including subdirectories
             File[] files = directory.listFiles();
             if (files != null) {
                 // Find and delete files that match the specified pattern
                 for (File file : files) {
-                    if (file.getName().contains("meta_") && file.getName().endsWith(".xml")) {
+                    if (file.isDirectory()) {
+                        // Recursively process files in subdirectories
+                        duplicateFiles += processFiles(file);
+                    } else if (file.getName().contains("meta_") && file.getName().endsWith(".xml")) {
                         // Log the deletion of each duplicate file
                         logger.trace("Deleting file: " + file.getAbsolutePath());
                         duplicateFiles += 1;

@@ -20,32 +20,37 @@ import org.apache.logging.log4j.Logger;
 
 class FixForXmlFiles_Test {
 	private static final Logger logger = LogManager.getLogger(FixForXmlFiles.class);
+	
 	@Test
 	void testProcessFiles() {
-		File testDirectory = new File("testDirectory");
-		testDirectory.mkdir();
-		try {
-			// Creating new File in directory
-			File file1 = new File(testDirectory, "meta.xml");
-			file1.createNewFile();
+	    File testDirectory = new File("testDirectory");
+	    testDirectory.mkdir();
 
-			File subDirectory = new File(testDirectory, "subDirectory");
-			subDirectory.mkdir();
-			File file2 = new File(subDirectory, "meta.xml");
-			file2.createNewFile();
+	    try {
+	        // Creating new File in directory
+	        File file1 = new File(testDirectory, "meta.xml");
+	        file1.createNewFile();
 
-			List<File> result = FixForXmlFiles.processFiles(testDirectory);
-			// Process files and check results
-			assertEquals(2, result.size());
-			assertTrue(result.contains(file1));
-			assertTrue(result.contains(file2));
-		} catch (Exception e) {
-			logger.error("testProcessXmlFileValidFile exception" + e);
-		} finally {
-			// Clean up the test directory
-			deleteDirectory(testDirectory.toPath());
-		}
+	        File subDirectory = new File(testDirectory, "subDirectory");
+	        subDirectory.mkdir();
+	        File file2 = new File(subDirectory, "meta.xml");
+	        file2.createNewFile();
+
+	        FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+	        List<File> result = fixForXmlFiles.processFiles(testDirectory);
+
+	        // Process files and check results
+	        assertEquals(2, result.size());
+	        assertTrue(result.contains(file1));
+	        assertTrue(result.contains(file2));
+	    } catch (Exception e) {
+	        logger.error("testProcessFiles exception", e);
+	    } finally {
+	        // Clean up the test directory
+	        deleteDirectory(testDirectory.toPath());
+	    }
 	}
+
 
 	// Deleting directory
 	public void deleteDirectory(Path directory) {
@@ -71,7 +76,8 @@ class FixForXmlFiles_Test {
 			// Load a valid XML file for processing
 			File validXmlFile = new File("src/test/resources/183112/meta.xml");
 			
-			Element result = FixForXmlFiles.processXmlFile(validXmlFile);
+			FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+	        Element result = fixForXmlFiles.processXmlFile(validXmlFile);
 
 			assertNotNull(result);
 		} catch (Exception e) {
@@ -86,58 +92,71 @@ class FixForXmlFiles_Test {
 	        File xmlFile = new File(relativeXmlFilePath);
 	        SAXBuilder saxBuilder = new SAXBuilder();
 	        Document document = saxBuilder.build(xmlFile);
-	        Element rootElement = document.getRootElement();	
-	        
-	        List<String> xmlElementsList = FixForXmlFiles.collectXmlElements(rootElement);
+	        Element rootElement = document.getRootElement();
+
+	        FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+	        List<String> xmlElementsList = fixForXmlFiles.collectXmlElements(rootElement);
+
 	        assertTrue(xmlElementsList.size() > 0);
 	    } catch (IOException e) {
-	    	logger.error("testCollectXmlElements exception" + e);
+	        logger.error("testCollectXmlElements exception" + e);
 	    }
 	}
 
+
 	@Test
-	public void testFindDuplicatesWithDuplicates() {
+	public void testFindDuplicates() {
 		try {
-			// Test values
-			List<String> xmlElementsList = Arrays.asList("<root xlink:href=\"00001.tif\"/>",
-					"<root xlink:href=\"00001.tif\"/>", "<root xlink:href=\"00002.tif\"/>",
-					"<root xlink:href=\"00003.tif\"/>", "<root xlink:href=\"00003.tif\"/>",
-					"<root xlink:href=\"00004.tif\"/>");
-			File xmlFile = new File("/Users/paul/git/xmlMitPaul/src/test/resources/183112/meta.xml");
-			// Checking if Duplicates are found
-			String expectedDirectoryName = "183112"; // The example directory
-			assertEquals(expectedDirectoryName, FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
+		    // Test values
+		    List<String> xmlElementsList = Arrays.asList("00001.tif",
+		            "00001.tif", "00002.tif",
+		            "00003.tif", "00003.tif",
+		            "00004.tif");
+		    File xmlFile = new File("/Users/paul/git/xmlMitPaul/src/test/resources/183112/meta.xml");
+		    // The example directory
+		    String expectedDirectoryName = "183112";
+		    
+		    FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+	        // Checking if Duplicates are found
+	        assertEquals(expectedDirectoryName, fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
 		} catch (Exception e) {
-			fail("Exception thrown during test", e);
+		    logger.error("Exception thrown during test", e);
 		}
 
 		try {
-			// Test values
-			List<String> xmlElementsList = Arrays.asList("<root xlink:href=\"00001.tif\"/>",
-					"<root xlink:href=\"00001.tif\"/>", "<root xlink:href=\"00001.tif\"/>",
-					"<root xlink:href=\"00001.tif\"/>", "<root xlink:href=\"00001.tif\"/>",
-					"<root xlink:href=\"00001.tif\"/>");
-			File xmlFile = new File("/src/test/resources/183112/meta.xml");
-			// Checking if Duplicates are found
-			String expectedDirectoryName = "183112"; // The example directory
-			assertEquals(expectedDirectoryName, FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
+		    // Test values
+		    List<String> xmlElementsList = Arrays.asList("00001.tif",
+		            "00001.tif", "00001.tif",
+		            "00001.tif", "00001.tif",
+		            "00001.tif");
+		    File xmlFile = new File("/src/test/resources/183112/meta.xml");
+		    // The example directory
+		    String expectedDirectoryName = "183112"; 
+		    
+		    FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+	        // Checking if Duplicates are found
+	        assertEquals(expectedDirectoryName, fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
 		} catch (Exception e) {
-			fail("Exception thrown during test", e);
+		    logger.error("Exception thrown during test", e);
 		}
 
 		try {
-			// Test values
-			List<String> xmlElementsList = Arrays.asList("<root xlink:href=\"00001.tif\"/>",
-					"<root xlink:href=\"00002.tif\"/>", "<root xlink:href=\"00003.tif\"/>",
-					"<root xlink:href=\"00004.tif\"/>", "<root xlink:href=\"00005.tif\"/>",
-					"<root xlink:href=\"00001.tif\"/>");
-			File xmlFile = new File("/src/test/resources/183112/meta.xml");
-			// Checking if Duplicates are found
-			String expectedDirectoryName = "183112"; // The example directory
-			assertEquals(expectedDirectoryName, FixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
+		    // Test values
+		    List<String> xmlElementsList = Arrays.asList("00001.tif",
+		            "00002.tif", "00003.tif",
+		            "00004.tif", "00005.tif",
+		            "00001.tif");
+		    File xmlFile = new File("/src/test/resources/183112/meta.xml");
+		    // The example directory
+		    String expectedDirectoryName = "183112";
+		    
+		    FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+	        // Checking if Duplicates are found
+	        assertEquals(expectedDirectoryName, fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
 		} catch (Exception e) {
-			logger.error("testFindDuplicatesWithDuplicates exception" + e);
+		    logger.error("testFindDuplicatesWithDuplicates exception" + e);
 		}
+
 	}
 
 	@Test
@@ -146,19 +165,21 @@ class FixForXmlFiles_Test {
 	        // Path to the original XML file
 	        String filePath = "src/test/resources/183112/meta.xml";
 	        File xmlFilePath = new File(filePath);
-	        
+
+	        FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
 	        // Create a backup copy
-	        Path expectedBackupFilePath = FixForXmlFiles.generateBackupFile(xmlFilePath);
+	        Path expectedBackupFilePath = fixForXmlFiles.generateBackupFile(xmlFilePath);
+	        
 	        // Check if the backup copy exists
 	        assertTrue(expectedBackupFilePath.toFile().exists());
+	        
 	        // Verify content
 	        List<String> originalLines = Files.readAllLines(xmlFilePath.toPath());
 	        List<String> backupLines = Files.readAllLines(expectedBackupFilePath);
 	        assertEquals(originalLines, backupLines);
-	        
+
 	    } catch (IOException e) {
-	        // Fail the test if an exception is thrown
-	    	logger.error("testGenerateBackupFile exception" + e);
+	    	logger.error("testGenerateBackupFile exception", e); 
 	    }
 	}
 }

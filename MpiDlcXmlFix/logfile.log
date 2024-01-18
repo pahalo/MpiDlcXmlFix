@@ -24256,3 +24256,176 @@
 18:49:03.135 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 21
 18:49:11.702 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
 18:49:25.926 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+19:11:18.407 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000325.tif
+19:11:18.423 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000390.tif
+19:11:18.425 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000037.tif
+19:11:18.435 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000213.tif
+19:11:18.450 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000402.tif
+19:11:18.456 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000114.tif
+19:11:18.467 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000142.tif
+19:11:18.467 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000203.tif
+19:11:18.467 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000413.tif
+19:11:18.480 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000122.tif
+19:11:18.480 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000173.tif
+19:11:18.480 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000175.tif
+19:11:18.480 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+19:11:18.480 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000467.tif
+19:11:18.480 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000478.tif
+19:11:18.481 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000492.tif
+19:11:18.489 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000009.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000010.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000017.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000019.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000029.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000031.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000032.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000035.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000060.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000064.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000073.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000074.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000079.tif
+19:11:18.490 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000083.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000084.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000085.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000103.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000129.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000130.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000131.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000134.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000147.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000171.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000177.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000186.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000187.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000188.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000232.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000238.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000240.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000241.tif
+19:11:18.491 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+19:11:18.496 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000015.tif
+19:11:18.496 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000016.tif
+19:11:18.502 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000192.tif
+19:11:18.502 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000206.tif
+19:11:18.502 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+19:11:18.502 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000249.tif
+19:11:18.502 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000262.tif
+19:11:18.503 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000265.tif
+19:11:18.503 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 11
+19:11:18.503 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 57
+19:11:18.503 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id:185478 185211 185023 185447 184595 187122 186004 185681 186460 183112 184939"
+19:11:27.657 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+19:18:12.137 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+19:18:43.642 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+19:18:46.490 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+19:18:53.927 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+19:19:21.275 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 8
+19:20:40.778 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+19:20:48.064 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:48.065 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+19:20:48.066 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:48.066 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:49.013 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:49.014 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+19:20:49.014 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:49.014 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:50.142 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:50.143 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+19:20:50.143 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:50.143 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:51.053 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:51.055 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+19:20:51.055 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:51.055 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:51.984 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:51.985 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+19:20:51.985 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:20:51.985 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:17.177 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 5
+19:21:31.400 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:31.403 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+19:21:31.403 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:31.403 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:31.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:31.907 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+19:21:31.908 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:31.908 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:32.545 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:32.546 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+19:21:32.546 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:32.546 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:36.203 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 7
+19:21:44.267 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:44.269 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+19:21:44.269 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:44.269 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+19:21:46.596 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 1
+09:40:16.785 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000325.tif
+09:40:16.817 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000390.tif
+09:40:16.820 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000037.tif
+09:40:16.834 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000213.tif
+09:40:16.852 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000402.tif
+09:40:16.859 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000114.tif
+09:40:16.874 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000142.tif
+09:40:16.874 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000203.tif
+09:40:16.874 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000413.tif
+09:40:16.891 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000122.tif
+09:40:16.891 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000173.tif
+09:40:16.891 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000175.tif
+09:40:16.891 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+09:40:16.891 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000467.tif
+09:40:16.891 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000478.tif
+09:40:16.891 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000492.tif
+09:40:16.902 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000009.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000010.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000017.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000019.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000029.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000031.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000032.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000035.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000060.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000064.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000073.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000074.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000079.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000083.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000084.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000085.tif
+09:40:16.903 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000103.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000129.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000130.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000131.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000134.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000147.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000171.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000177.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000186.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000187.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000188.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000232.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000238.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000240.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000241.tif
+09:40:16.904 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+09:40:16.911 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000015.tif
+09:40:16.911 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000016.tif
+09:40:16.919 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000192.tif
+09:40:16.919 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000206.tif
+09:40:16.919 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+09:40:16.919 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000249.tif
+09:40:16.919 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000262.tif
+09:40:16.919 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000265.tif
+09:40:16.920 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 11
+09:40:16.920 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 57
+09:40:16.920 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id:185478 185211 185023 185447 184595 187122 186004 185681 186460 183112 184939"
+09:41:15.069 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 11
+09:50:22.855 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+09:50:22.857 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+09:50:22.857 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+09:50:22.858 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+09:52:10.879 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 1
+09:56:09.239 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0

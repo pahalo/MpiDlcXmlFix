@@ -40,27 +40,36 @@ public class FixForXmlFiles {
         if (args.length != 1) {
         	logger.error("Please specify only one directory."); 
         } else {
-        	
+        	//Instantiating non static functions
+        	 FixForXmlFiles fileProcessor = new FixForXmlFiles();
+        	 FixForXmlFiles xmlElementCollector = new FixForXmlFiles();
+        	 FixForXmlFiles duplicateFinder = new FixForXmlFiles();
+             FixForXmlFiles backupGenerator = new FixForXmlFiles();
+       	     FixForXmlFiles xmlFilesProcessor = new FixForXmlFiles();
+       	   
         	 File directory = new File(args[0]).getAbsoluteFile();
              if (directory.exists() && directory.isDirectory()) {
             	// Process files in the directory that have the specified XML pattern
-             	List<File> filesWithMetaXml = processFiles(directory);
+            	List<File> filesWithMetaXml = fileProcessor.processFiles(directory);
              	 // Process each XML file and identify duplicates
              	for (File file : filesWithMetaXml) {
-             	    Element rootElement = processXmlFile(file);
-             	    
+             	   Element rootElement = xmlFilesProcessor.processXmlFile(file);
              	   if (rootElement != null) {
-             		   List<String> tifElementsList = collectXmlElements(rootElement);
+             		   List<String> tifElementsList = xmlElementCollector.collectXmlElements(rootElement);
              		   // Find duplicates and obtain the parent directory
-             		   String parentDir = findDuplicates(tifElementsList, file);
+             		   String parentDir = duplicateFinder.findDuplicates(tifElementsList, file);
                        if (parentDir != null) {
                            parentDirectory.add(parentDir);
                            // Generate BackupFiles of the Files with 
-                           //generateBackupFile(file);
+                           try {
+                        	    backupGenerator.generateBackupFile(file);
+                        	} catch (IOException e) {
+                        		logger.error("Error creating backup file for: " + file.getAbsolutePath(), e);
+                        	}
                        }
              		}
              	}
-             	 // Log the number of files with duplicates and the total count of duplicates
+             	// Log the number of files with duplicates and the total count of duplicates
                 logger.info("Number of files with duplicates: " + filesWithDuplicates); 
                 logger.info("Total count of duplicates: " + totalDuplicates); 
 
@@ -84,7 +93,7 @@ public class FixForXmlFiles {
      * @param directory The directory to be searched.
      * @return List of files with meta.xml.
      */
-    static List<File> processFiles(File directory) {
+     List<File> processFiles(File directory) {
         List<File> filesWithMetaXml = new ArrayList<>();
         if (directory.isDirectory()) {
             File[] files = directory.listFiles();
@@ -108,14 +117,14 @@ public class FixForXmlFiles {
  	* @param file The XML file to be processed.
  	* @return Root XML element of the file.
  	*/
-     static Element processXmlFile(File file) {
+     Element processXmlFile(File file) {
 
         try {
             SAXBuilder sax = new SAXBuilder();
             Document doc = sax.build(file);
             // Collects the rootelement
             Element rootElement = doc.getRootElement();
-            //logger.trace("root element found: " + rootElement);
+            logger.trace("root element found: " + rootElement);
             return rootElement;
         } catch (Exception e) {
             logger.error("processXmlFile exception" + e);
@@ -128,7 +137,7 @@ public class FixForXmlFiles {
       * @param element The XML element to start collecting from.
       * @return List of attribute values ending in ".tif".
       */
-     static List<String> collectXmlElements(Element element) {
+      List<String> collectXmlElements(Element element) {
          // List to store .tif elements
          List<String> tifElementsList = new ArrayList<>();
 
@@ -162,7 +171,7 @@ public class FixForXmlFiles {
      * @param xmlFile The XML file currently being processed.
      * @return Name of the parent directory if duplicates are found, otherwise null.
      */
-     static String findDuplicates(List<String> tifElementsList, File xmlFile) {
+     String findDuplicates(List<String> tifElementsList, File xmlFile) {
     	    boolean duplicatesFound = false;
     	    Set<String> tifValues = new HashSet<>();
     	    List<String> tifDuplicatesList = new ArrayList<>();
@@ -176,7 +185,7 @@ public class FixForXmlFiles {
     	            if (!tifValues.add(tifValue)) {
     	                duplicatesFound = true;
     	                if (!tifDuplicatesList.contains(tifValue)) {
-    	                    //logger.trace("Duplicate Found that is not in List: " + tifValue);
+    	                    logger.trace("Duplicate Found that is not in List: " + tifValue);
     	                    tifDuplicatesList.add(tifValue);
     	                }
     	            }
@@ -186,12 +195,12 @@ public class FixForXmlFiles {
     	    if (duplicatesFound) {
     	        filesWithDuplicates++;
     	        totalDuplicates += tifDuplicatesList.size();
-    	        //logger.trace(xmlFile.getAbsolutePath());
+    	        logger.trace(xmlFile.getAbsolutePath());
     	        File directoryAbove = xmlFile.getParentFile();
     	        parentDirectory.add(directoryAbove.getName());
-    	        //for (String tifValue : tifDuplicatesList) {
-    	            //logger.info("   " + tifValue + ".tif");
-    	        //}
+    	        for (String tifValue : tifDuplicatesList) {
+    	            logger.info("   " + tifValue + ".tif");
+    	        }
     	        tifDuplicatesList.clear();
     	        return directoryAbove.getName();
     	    }
@@ -204,7 +213,7 @@ public class FixForXmlFiles {
      * @param xmlFile The File object representing the XML file to be backed up.
      * @throws IOException If an I/O error occurs during the file reading or writing process.
      */
-     static Path generateBackupFile(File xmlFile) throws IOException {
+     Path generateBackupFile(File xmlFile) throws IOException {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS");
         
