@@ -24429,3 +24429,7 @@
 09:50:22.858 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
 09:52:10.879 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 1
 09:56:09.239 [main] INFO  io.goobi.dlc.DeleteCreatedDuplicateFiles - Total duplicate files deleted: 0
+12:07:43.623 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif.tif
+12:07:43.624 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif.tif
+12:08:04.516 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif.tif
+12:08:04.518 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif.tif

@@ -233,6 +233,7 @@ public class FixForXmlFiles {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS");
 
         // Name of the backupfile
+        // TODO: besser meta.xml.TIMESTAMP -> workflow channel beitreten und fragen, wie dort die backups heissen (Stelle im Code)
         String backupFileName = "meta_" + currentTime.format(formatter) + ".xml";
 
         // Creating a backupfile in the same directory
@@ -240,6 +241,8 @@ public class FixForXmlFiles {
 
         Path sourcePath = xmlFile.toPath();
         Path destinationPath = backupFile.toPath();
+
+        // TODO: hier noch loggen
         return Files.copy(sourcePath, destinationPath, StandardCopyOption.COPY_ATTRIBUTES);
 
     }
