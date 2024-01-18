@@ -4,25 +4,21 @@ import java.io.File;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.Configurator;
 
 /**
- * This class deletes duplicate files created during a specific process.
- * It looks for files in a given directory and its subdirectories that match a certain pattern and deletes them.
+ * This class deletes backuped files created during a specific process. It looks for files in a given directory and its subdirectories that match a
+ * certain pattern and deletes them.
  */
-public class DeleteCreatedDuplicateFiles {
+public class CleanupBackups {
 
-    private static final Logger logger = LogManager.getLogger(DeleteCreatedDuplicateFiles.class);
+    private static final Logger logger = LogManager.getLogger(CleanupBackups.class);
 
     /**
      * The main entry point of the application.
+     *
      * @param args Command line arguments - specify only one directory.
      */
     public static void main(String[] args) {
-        // Set the root log level to DEBUG
-        Configurator.setRootLevel(org.apache.logging.log4j.Level.DEBUG);
-        int duplicateFiles = 0;
-
         if (args.length != 1) {
             // Log an error if the number of specified directories is not equal to one
             logger.error("Please specify only one directory.");
@@ -30,25 +26,24 @@ public class DeleteCreatedDuplicateFiles {
             // Process the specified directory and its subdirectories if it exists
             File directory = new File(args[0]).getAbsoluteFile();
             if (directory.exists()) {
-            	DeleteCreatedDuplicateFiles fileProcessor = new DeleteCreatedDuplicateFiles();
-                duplicateFiles = fileProcessor.processFiles(directory);
+                CleanupBackups fileProcessor = new CleanupBackups();
+                int numberOfBackups = fileProcessor.processFiles(directory);
+                logger.info("Total duplicate files deleted: " + numberOfBackups);
             } else {
                 // Log an error if the specified path is not a valid directory
                 logger.error("Please specify a valid directory.");
             }
         }
-
-        // Log the total number of duplicate files found and deleted
-        logger.info("Total duplicate files deleted: " + duplicateFiles);
     }
 
     /**
      * Process files in the given directory and its subdirectories, deleting files that match a specific pattern.
+     *
      * @param directory The directory to process.
      * @return The number of duplicate files deleted.
      */
     private int processFiles(File directory) {
-        int duplicateFiles = 0;
+        int numberOfBackups = 0;
 
         if (directory.isDirectory()) {
             // List all files in the directory, including subdirectories
@@ -58,18 +53,17 @@ public class DeleteCreatedDuplicateFiles {
                 for (File file : files) {
                     if (file.isDirectory()) {
                         // Recursively process files in subdirectories
-                        duplicateFiles += processFiles(file);
+                        numberOfBackups += processFiles(file);
                     } else if (file.getName().contains("meta_") && file.getName().endsWith(".xml")) {
                         // Log the deletion of each duplicate file
                         logger.trace("Deleting file: " + file.getAbsolutePath());
-                        duplicateFiles += 1;
+                        numberOfBackups++;
                         // Delete the file
                         file.delete();
                     }
                 }
             }
         }
-
-        return duplicateFiles;
+        return numberOfBackups;
     }
 }
