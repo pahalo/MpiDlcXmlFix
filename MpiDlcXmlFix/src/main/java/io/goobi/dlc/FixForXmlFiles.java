@@ -8,9 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,9 +59,9 @@ public class FixForXmlFiles {
                         // Find duplicates and obtain the parent directory
                         boolean hasDuplicates = fixer.findDuplicates(tifElementsList, file);
                         if (hasDuplicates) {
-                            folderList.add(file.getParent());
-
-                            // Generate BackupFiles of the Files with
+                        	folderList.add(new File(file.getParent()).getName());
+                        	
+                            // Generate BackupFiles of the Files with duplicates tif values
                             try {
                                 fixer.generateBackupFile(file);
                             } catch (IOException e) {
@@ -85,7 +83,7 @@ public class FixForXmlFiles {
                         stringBuilder.append(" ");
                     }
                 }
-                logger.info("\"id:" + stringBuilder + "\"");
+                logger.info("\"id: " + stringBuilder + "\"");
 
             } else {
                 logger.error("Das Verzeichnis existiert nicht.");
@@ -190,7 +188,6 @@ public class FixForXmlFiles {
     boolean findDuplicates(List<String> tifElementsList, File xmlFile) {
         boolean duplicatesFound = false;
 
-        // TODO: überlegen ob list oder map
         List<String> tifValues = new ArrayList<>();
         List<String> tifDuplicatesList = new ArrayList<>();
         List<String> parentDirectory = new ArrayList<>();
