@@ -108,6 +108,7 @@ class FixForXmlFiles_Test {
             FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
             Element result = fixForXmlFiles.processXmlFile(validXmlFile);
 
+            //If NotNull elements were found and the file is valid
             assertNotNull(result);
         } catch (Exception e) {
             logger.error("testCollectXmlElements exception", e);
