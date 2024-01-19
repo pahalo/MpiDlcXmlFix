@@ -1,7 +1,9 @@
 package io.goobi.dlc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -16,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
 class FixForXmlFiles_Test {
@@ -27,50 +30,77 @@ class FixForXmlFiles_Test {
         testDirectory.mkdir();
 
         try {
-            // Creating new File in directory
+        	  // Creating new File in directory
             File file1 = new File(testDirectory, "meta.xml");
             file1.createNewFile();
 
             File subDirectory = new File(testDirectory, "subDirectory");
             subDirectory.mkdir();
             File file2 = new File(subDirectory, "meta.xml");
+            File file3 = new File(subDirectory, "meta.txt");
             file2.createNewFile();
+            file3.createNewFile();
 
+            File subDirectory02 = new File(testDirectory, "subDirectory02");
+            subDirectory02.mkdir();
+            File file4 = new File(subDirectory02, "meta.xml");
+            File file5 = new File(subDirectory02, "meta.txt");
+            file4.createNewFile();
+            file5.createNewFile();
+
+            // Process files and check results
             FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
             List<File> result = fixForXmlFiles.processFiles(testDirectory);
 
-            // Process files and check results
-            assertEquals(2, result.size());
+            assertEquals(3, result.size()); 
             assertTrue(result.contains(file1));
             assertTrue(result.contains(file2));
-        } catch (Exception e) {
-            logger.error("testProcessFiles exception", e);
+            assertFalse(result.contains(file3));
+            assertTrue(result.contains(file4));
+            assertFalse(result.contains(file5));
+        } catch (IOException e) {
+            // Handle IOException
+            logger.error("IOException occurred", e);
+        } catch (SecurityException e) {
+            // Handle SecurityException
+            logger.error("SecurityException occurred", e);
+        } catch (NullPointerException e) {
+            // Handle NullPointerException
+            logger.error("NullPointerException occurred", e);
         } finally {
             // Clean up the test directory
             deleteDirectory(testDirectory.toPath());
         }
     }
 
+
     // Deleting directory
     public void deleteDirectory(Path directory) {
-        File dirFile = directory.toFile();
-        if (dirFile.isDirectory()) {
-            File[] files = dirFile.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isDirectory()) {
-                        deleteDirectory(file.toPath());
-                    } else {
-                        file.delete();
+        try {
+            File dirFile = directory.toFile();
+            if (dirFile.isDirectory()) {
+                File[] files = dirFile.listFiles();
+                if (files != null) {
+                	// Iterate through all files in the directory
+                    for (File file : files) {
+                        if (file.isDirectory()) {
+                            deleteDirectory(file.toPath());
+                        } else {
+                            file.delete();
+                        }
                     }
                 }
             }
             dirFile.delete();
+        
+         // Handle SecurityException or NullPointerException
+        } catch (SecurityException | NullPointerException e) {
+            logger.error("Directory could not be deleted", e);
         }
     }
 
     @Test
-    public void testProcessXmlFileValidFile() {
+    public void testProcessXmlFile() {
         try {
             // Load a valid XML file for processing
             File validXmlFile = new File("src/test/resources/183112/meta.xml");
@@ -79,6 +109,17 @@ class FixForXmlFiles_Test {
             Element result = fixForXmlFiles.processXmlFile(validXmlFile);
 
             assertNotNull(result);
+        } catch (Exception e) {
+            logger.error("testCollectXmlElements exception", e);
+        }
+        try {
+            // Load a unexisting xml File for processing 
+            File validXmlFile = new File("src/test/resources/183112/met.xml");
+
+            FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+            Element result = fixForXmlFiles.processXmlFile(validXmlFile);
+
+            assertNull(result);
         } catch (Exception e) {
             logger.error("testCollectXmlElements exception", e);
         }
@@ -111,12 +152,11 @@ class FixForXmlFiles_Test {
                     "00003.tif", "00003.tif",
                     "00004.tif");
             File xmlFile = new File("/Users/paul/git/xmlMitPaul/src/test/resources/183112/meta.xml");
-            // The example directory
-            String expectedDirectoryName = "183112";
 
             FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+            boolean result = fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile);
             // Checking if Duplicates are found
-            assertEquals(expectedDirectoryName, fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
+            assertTrue(result);
         } catch (Exception e) {
             logger.error("Exception thrown during test", e);
         }
@@ -128,12 +168,11 @@ class FixForXmlFiles_Test {
                     "00001.tif", "00001.tif",
                     "00001.tif");
             File xmlFile = new File("/src/test/resources/183112/meta.xml");
-            // The example directory
-            String expectedDirectoryName = "183112";
 
             FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+            boolean result = fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile);
             // Checking if Duplicates are found
-            assertEquals(expectedDirectoryName, fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
+            assertTrue(result);
         } catch (Exception e) {
             logger.error("Exception thrown during test", e);
         }
@@ -145,12 +184,11 @@ class FixForXmlFiles_Test {
                     "00004.tif", "00005.tif",
                     "00001.tif");
             File xmlFile = new File("/src/test/resources/183112/meta.xml");
-            // The example directory
-            String expectedDirectoryName = "183112";
 
             FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+            boolean result = fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile);
             // Checking if Duplicates are found
-            assertEquals(expectedDirectoryName, fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile));
+            assertTrue(result);
         } catch (Exception e) {
             logger.error("testFindDuplicatesWithDuplicates exception", e);
         }
@@ -174,10 +212,19 @@ class FixForXmlFiles_Test {
             // Verify content
             List<String> originalLines = Files.readAllLines(xmlFilePath.toPath());
             List<String> backupLines = Files.readAllLines(expectedBackupFilePath);
+            // Check if the backup is identical 
             assertEquals(originalLines, backupLines);
 
         } catch (IOException e) {
             logger.error("testGenerateBackupFile exception", e);
         }
     }
+    @AfterAll
+    private static void deletingBackups() {
+    	String directoryPath = "src/test/resources";
+    	CleanupBackups cleanupBackups = new CleanupBackups();
+        int numberOfBackupsDeleted = cleanupBackups.processFiles(new File(directoryPath));
+        logger.info("Number of BackupsDeleted = " + numberOfBackupsDeleted);
+    }
+    
 }

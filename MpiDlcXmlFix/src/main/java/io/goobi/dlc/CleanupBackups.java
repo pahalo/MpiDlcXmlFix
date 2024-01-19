@@ -42,7 +42,7 @@ public class CleanupBackups {
      * @param directory The directory to process.
      * @return The number of duplicate files deleted.
      */
-    private int processFiles(File directory) {
+    int processFiles(File directory) {
         int numberOfBackups = 0;
 
         if (directory.isDirectory()) {

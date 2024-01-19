@@ -104,7 +104,7 @@ public class FixForXmlFiles {
             if (files != null) {
                 // Finds all the files that are named meta.xml
                 for (File file : files) {
-                    if (file.isFile() && "meta.xml".equals(file.getName().toLowerCase())) {
+                    if (file.isFile() && "meta.xml".equals(file.getName())) {
                         //logger.trace("meta.xml found");
                         filesWithMetaXml.add(file);
                     } else if (file.isDirectory()) {
