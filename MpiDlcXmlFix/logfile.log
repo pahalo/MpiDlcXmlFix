@@ -28645,3 +28645,454 @@ Caused by: org.xml.sax.SAXParseException: Auf Elementtyp "mets:smLink" müssen e
 	at org.jdom2.input.sax.SAXBuilderEngine.build(SAXBuilderEngine.java:217) ~[jdom2-2.0.6.1.jar:?]
 	... 73 more
 14:12:50.908 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of BackupsDeleted = 1
+14:51:39.319 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:51:39.321 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+14:51:39.322 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:51:39.322 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:51:39.402 [main] ERROR io.goobi.dlc.FixForXmlFiles - No root element found
+java.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/183112/met.xml (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:106) ~[?:?]
+	at java.base/sun.net.www.protocol.file.FileURLConnection.connect(FileURLConnection.java:84) ~[?:?]
+	at java.base/sun.net.www.protocol.file.FileURLConnection.getInputStream(FileURLConnection.java:180) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLEntityManager.setupCurrentEntity(XMLEntityManager.java:654) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLVersionDetector.determineDocVersion(XMLVersionDetector.java:150) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:861) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:825) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1224) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:637) ~[?:?]
+	at org.jdom2.input.sax.SAXBuilderEngine.build(SAXBuilderEngine.java:217) ~[jdom2-2.0.6.1.jar:?]
+	at org.jdom2.input.sax.SAXBuilderEngine.build(SAXBuilderEngine.java:277) ~[jdom2-2.0.6.1.jar:?]
+	at org.jdom2.input.sax.SAXBuilderEngine.build(SAXBuilderEngine.java:264) ~[jdom2-2.0.6.1.jar:?]
+	at org.jdom2.input.SAXBuilder.build(SAXBuilder.java:1104) ~[jdom2-2.0.6.1.jar:2.x-2021.11.08.17.25]
+	at io.goobi.dlc.FixForXmlFiles.processXmlFile(FixForXmlFiles.java:129) ~[classes/:?]
+	at io.goobi.dlc.FixForXmlFiles_Test.testProcessXmlFile(FixForXmlFiles_Test.java:121) ~[test-classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:728) ~[junit-platform-commons-1.10.0.jar:1.10.0]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:218) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:214) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:139) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:94) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:52) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.SessionPerRequestLauncher.execute(SessionPerRequestLauncher.java:70) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.eclipse.jdt.internal.junit5.runner.JUnit5TestReference.run(JUnit5TestReference.java:100) [.cp/:?]
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:40) [.cp/:?]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:529) [.cp/:?]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:756) [.cp/:?]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:452) [.cp/:?]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:210) [.cp/:?]
+14:51:39.507 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of BackupsDeleted = 1
+14:52:23.046 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:52:23.048 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+14:52:23.048 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:52:23.048 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:52:23.104 [main] ERROR io.goobi.dlc.FixForXmlFiles - No root element found
+java.io.FileNotFoundException: /Users/paul/git/MpiDlcXmlFix/MpiDlcXmlFix/src/test/resources/183112/met.xml (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:213) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:152) ~[?:?]
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:106) ~[?:?]
+	at java.base/sun.net.www.protocol.file.FileURLConnection.connect(FileURLConnection.java:84) ~[?:?]
+	at java.base/sun.net.www.protocol.file.FileURLConnection.getInputStream(FileURLConnection.java:180) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLEntityManager.setupCurrentEntity(XMLEntityManager.java:654) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLVersionDetector.determineDocVersion(XMLVersionDetector.java:150) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:861) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:825) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1224) ~[?:?]
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:637) ~[?:?]
+	at org.jdom2.input.sax.SAXBuilderEngine.build(SAXBuilderEngine.java:217) ~[jdom2-2.0.6.1.jar:?]
+	at org.jdom2.input.sax.SAXBuilderEngine.build(SAXBuilderEngine.java:277) ~[jdom2-2.0.6.1.jar:?]
+	at org.jdom2.input.sax.SAXBuilderEngine.build(SAXBuilderEngine.java:264) ~[jdom2-2.0.6.1.jar:?]
+	at org.jdom2.input.SAXBuilder.build(SAXBuilder.java:1104) ~[jdom2-2.0.6.1.jar:2.x-2021.11.08.17.25]
+	at io.goobi.dlc.FixForXmlFiles.processXmlFile(FixForXmlFiles.java:129) ~[classes/:?]
+	at io.goobi.dlc.FixForXmlFiles_Test.testProcessXmlFile(FixForXmlFiles_Test.java:121) ~[test-classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:728) ~[junit-platform-commons-1.10.0.jar:1.10.0]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:218) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:214) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:139) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.0.jar:5.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[?:?]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:94) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:52) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.junit.platform.launcher.core.SessionPerRequestLauncher.execute(SessionPerRequestLauncher.java:70) [junit-platform-launcher-1.10.0.jar:1.10.0]
+	at org.eclipse.jdt.internal.junit5.runner.JUnit5TestReference.run(JUnit5TestReference.java:100) [.cp/:?]
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:40) [.cp/:?]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:529) [.cp/:?]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:756) [.cp/:?]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:452) [.cp/:?]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:210) [.cp/:?]
+14:52:23.151 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of BackupsDeleted = 1
+14:53:04.168 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of BackupsDeleted = 0
+14:53:07.755 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of BackupsDeleted = 0
+14:53:14.650 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of BackupsDeleted = 0
+14:53:27.738 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000325.tif
+14:53:27.758 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000390.tif
+14:53:27.761 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000037.tif
+14:53:27.771 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000213.tif
+14:53:27.786 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000402.tif
+14:53:27.792 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000114.tif
+14:53:27.804 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000142.tif
+14:53:27.805 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000203.tif
+14:53:27.805 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000413.tif
+14:53:27.819 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000122.tif
+14:53:27.820 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000173.tif
+14:53:27.820 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000175.tif
+14:53:27.820 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+14:53:27.821 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000467.tif
+14:53:27.821 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000478.tif
+14:53:27.821 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000492.tif
+14:53:27.831 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000009.tif
+14:53:27.832 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000010.tif
+14:53:27.832 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000017.tif
+14:53:27.832 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000019.tif
+14:53:27.832 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000029.tif
+14:53:27.832 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000031.tif
+14:53:27.832 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000032.tif
+14:53:27.832 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000035.tif
+14:53:27.832 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000060.tif
+14:53:27.832 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000064.tif
+14:53:27.833 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000073.tif
+14:53:27.833 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000074.tif
+14:53:27.833 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000079.tif
+14:53:27.833 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000083.tif
+14:53:27.833 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000084.tif
+14:53:27.833 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000085.tif
+14:53:27.833 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000103.tif
+14:53:27.834 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000129.tif
+14:53:27.834 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000130.tif
+14:53:27.834 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000131.tif
+14:53:27.834 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000134.tif
+14:53:27.834 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000147.tif
+14:53:27.834 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000171.tif
+14:53:27.835 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000177.tif
+14:53:27.835 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+14:53:27.835 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000186.tif
+14:53:27.835 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000187.tif
+14:53:27.835 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000188.tif
+14:53:27.835 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000232.tif
+14:53:27.836 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000238.tif
+14:53:27.836 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000240.tif
+14:53:27.836 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000241.tif
+14:53:27.836 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+14:53:27.841 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000015.tif
+14:53:27.841 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000016.tif
+14:53:27.850 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000192.tif
+14:53:27.850 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000206.tif
+14:53:27.851 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+14:53:27.851 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000249.tif
+14:53:27.851 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000262.tif
+14:53:27.851 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000265.tif
+14:53:27.852 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 11
+14:53:27.853 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 57
+14:53:27.853 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id: 185478 185211 185023 185447 184595 187122 186004 185681 186460 183112 184939"
+14:53:29.108 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000325.tif
+14:53:29.129 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000390.tif
+14:53:29.135 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000037.tif
+14:53:29.154 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000213.tif
+14:53:29.169 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000402.tif
+14:53:29.175 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000114.tif
+14:53:29.190 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000142.tif
+14:53:29.190 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000203.tif
+14:53:29.191 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000413.tif
+14:53:29.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000122.tif
+14:53:29.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000173.tif
+14:53:29.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000175.tif
+14:53:29.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+14:53:29.216 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000467.tif
+14:53:29.216 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000478.tif
+14:53:29.216 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000492.tif
+14:53:29.225 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000009.tif
+14:53:29.225 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000010.tif
+14:53:29.225 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000017.tif
+14:53:29.225 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000019.tif
+14:53:29.225 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000029.tif
+14:53:29.225 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000031.tif
+14:53:29.225 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000032.tif
+14:53:29.225 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000035.tif
+14:53:29.225 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000060.tif
+14:53:29.225 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000064.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000073.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000074.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000079.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000083.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000084.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000085.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000103.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000129.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000130.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000131.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000134.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000147.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000171.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000177.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000186.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000187.tif
+14:53:29.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000188.tif
+14:53:29.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000232.tif
+14:53:29.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000238.tif
+14:53:29.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000240.tif
+14:53:29.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000241.tif
+14:53:29.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+14:53:29.233 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000015.tif
+14:53:29.234 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000016.tif
+14:53:29.243 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000192.tif
+14:53:29.245 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000206.tif
+14:53:29.245 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+14:53:29.245 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000249.tif
+14:53:29.245 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000262.tif
+14:53:29.245 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000265.tif
+14:53:29.245 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 11
+14:53:29.246 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 57
+14:53:29.246 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id: 185478 185211 185023 185447 184595 187122 186004 185681 186460 183112 184939"
+14:53:30.127 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000325.tif
+14:53:30.148 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000390.tif
+14:53:30.150 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000037.tif
+14:53:30.165 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000213.tif
+14:53:30.180 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000402.tif
+14:53:30.186 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000114.tif
+14:53:30.201 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000142.tif
+14:53:30.201 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000203.tif
+14:53:30.201 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000413.tif
+14:53:30.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000122.tif
+14:53:30.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000173.tif
+14:53:30.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000175.tif
+14:53:30.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+14:53:30.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000467.tif
+14:53:30.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000478.tif
+14:53:30.215 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000492.tif
+14:53:30.226 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000009.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000010.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000017.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000019.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000029.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000031.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000032.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000035.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000060.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000064.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000073.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000074.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000079.tif
+14:53:30.227 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000083.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000084.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000085.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000103.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000129.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000130.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000131.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000134.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000147.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000171.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000177.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000186.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000187.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000188.tif
+14:53:30.228 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000232.tif
+14:53:30.229 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000238.tif
+14:53:30.229 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000240.tif
+14:53:30.229 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000241.tif
+14:53:30.229 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+14:53:30.234 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000015.tif
+14:53:30.234 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000016.tif
+14:53:30.243 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000192.tif
+14:53:30.243 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000206.tif
+14:53:30.243 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+14:53:30.243 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000249.tif
+14:53:30.243 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000262.tif
+14:53:30.243 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000265.tif
+14:53:30.244 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 11
+14:53:30.244 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 57
+14:53:30.244 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id: 185478 185211 185023 185447 184595 187122 186004 185681 186460 183112 184939"
+14:53:31.181 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000325.tif
+14:53:31.201 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000390.tif
+14:53:31.204 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000037.tif
+14:53:31.213 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000213.tif
+14:53:31.229 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000402.tif
+14:53:31.234 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000114.tif
+14:53:31.246 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000142.tif
+14:53:31.246 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000203.tif
+14:53:31.246 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000413.tif
+14:53:31.264 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000122.tif
+14:53:31.265 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000173.tif
+14:53:31.265 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000175.tif
+14:53:31.265 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+14:53:31.266 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000467.tif
+14:53:31.266 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000478.tif
+14:53:31.266 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000492.tif
+14:53:31.274 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000009.tif
+14:53:31.274 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000010.tif
+14:53:31.274 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000017.tif
+14:53:31.274 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000019.tif
+14:53:31.274 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000029.tif
+14:53:31.274 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000031.tif
+14:53:31.274 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000032.tif
+14:53:31.274 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000035.tif
+14:53:31.274 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000060.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000064.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000073.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000074.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000079.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000083.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000084.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000085.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000103.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000129.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000130.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000131.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000134.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000147.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000171.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000177.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000178.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000186.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000187.tif
+14:53:31.275 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000188.tif
+14:53:31.276 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000232.tif
+14:53:31.276 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000238.tif
+14:53:31.276 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000240.tif
+14:53:31.276 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000241.tif
+14:53:31.276 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+14:53:31.280 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000015.tif
+14:53:31.280 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000016.tif
+14:53:31.288 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000192.tif
+14:53:31.288 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000206.tif
+14:53:31.288 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000242.tif
+14:53:31.288 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000249.tif
+14:53:31.288 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000262.tif
+14:53:31.288 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00000265.tif
+14:53:31.288 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of files with duplicates: 11
+14:53:31.289 [main] INFO  io.goobi.dlc.FixForXmlFiles - Total count of duplicates: 57
+14:53:31.289 [main] INFO  io.goobi.dlc.FixForXmlFiles - "id: 185478 185211 185023 185447 184595 187122 186004 185681 186460 183112 184939"
+14:53:39.808 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:39.810 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+14:53:39.810 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:39.810 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:39.903 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of BackupsDeleted = 45
+14:53:46.097 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:46.098 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+14:53:46.099 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:46.099 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:46.175 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of BackupsDeleted = 1
+14:53:48.059 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:48.061 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+14:53:48.061 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:48.061 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:48.153 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of BackupsDeleted = 1
+14:53:49.450 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:49.451 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00003.tif
+14:53:49.451 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:49.451 [main] INFO  io.goobi.dlc.FixForXmlFiles -    00001.tif
+14:53:49.532 [main] INFO  io.goobi.dlc.FixForXmlFiles - Number of BackupsDeleted = 1

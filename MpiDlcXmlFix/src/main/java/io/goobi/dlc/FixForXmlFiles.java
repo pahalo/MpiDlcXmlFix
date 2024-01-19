@@ -132,7 +132,7 @@ public class FixForXmlFiles {
             logger.trace("Root element found: " + rootElement);
             return rootElement;
         } catch (JDOMException | IOException e) {
-            logger.error("No root element found", e);
+            logger.trace("No root element found", e);
             return null;
         }
     }

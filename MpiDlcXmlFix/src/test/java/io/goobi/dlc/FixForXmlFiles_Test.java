@@ -108,10 +108,10 @@ class FixForXmlFiles_Test {
             FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
             Element result = fixForXmlFiles.processXmlFile(validXmlFile);
 
-            //If NotNull elements were found and the file is valid
+            //If NotNull: elements were found and the file is valid
             assertNotNull(result);
         } catch (Exception e) {
-            logger.error("testCollectXmlElements exception", e);
+            logger.error("Processed xml File is unvalid", e);
         }
         try {
             // Load a unexisting xml File for processing 
@@ -122,7 +122,7 @@ class FixForXmlFiles_Test {
 
             assertNull(result);
         } catch (Exception e) {
-            logger.error("testCollectXmlElements exception", e);
+        	logger.error("The verification of a non-existent XML file was successful.", e);
         }
     }
 
@@ -140,7 +140,7 @@ class FixForXmlFiles_Test {
 
             assertTrue(xmlElementsList.size() > 0);
         } catch (IOException e) {
-            logger.error("testCollectXmlElements exception", e);
+            logger.error("No tif values found", e);
         }
     }
 
@@ -159,7 +159,7 @@ class FixForXmlFiles_Test {
             // Checking if Duplicates are found
             assertTrue(result);
         } catch (Exception e) {
-            logger.error("Exception thrown during test", e);
+            logger.error("No duplicates found", e);
         }
 
         try {
@@ -175,7 +175,7 @@ class FixForXmlFiles_Test {
             // Checking if Duplicates are found
             assertTrue(result);
         } catch (Exception e) {
-            logger.error("Exception thrown during test", e);
+        	logger.error("No duplicates found", e);
         }
 
         try {
@@ -191,7 +191,7 @@ class FixForXmlFiles_Test {
             // Checking if Duplicates are found
             assertTrue(result);
         } catch (Exception e) {
-            logger.error("testFindDuplicatesWithDuplicates exception", e);
+        	logger.error("No duplicates found", e);
         }
 
     }
@@ -217,13 +217,14 @@ class FixForXmlFiles_Test {
             assertEquals(originalLines, backupLines);
 
         } catch (IOException e) {
-            logger.error("testGenerateBackupFile exception", e);
+            logger.error("Generated Backupfile does not match the original Lines", e);
         }
     }
     @AfterAll
     private static void deletingBackups() {
     	String directoryPath = "src/test/resources";
     	CleanupBackups cleanupBackups = new CleanupBackups();
+    	// Calls the cleanupBackups class in order to delete backup files
         int numberOfBackupsDeleted = cleanupBackups.processFiles(new File(directoryPath));
         logger.info("Number of BackupsDeleted = " + numberOfBackupsDeleted);
     }
