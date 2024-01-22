@@ -38,7 +38,7 @@ public class CleanupBackups {
 
     /**
      * Process files in the given directory and its subdirectories, deleting files that match a specific pattern.
-     *
+     * 
      * @param directory The directory to process.
      * @return The number of duplicate files deleted.
      */
