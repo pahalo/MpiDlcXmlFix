@@ -279,12 +279,18 @@ public class FixForXmlFiles {
     private void findPHYSValuesOfDuplicateLines(Element element, List<String> allIDValues) {
         // Check attributes of the current element
         List<Attribute> attributes = element.getAttributes();
+        Element parentElement = element.getParentElement();
+        
         for (Attribute attribute : attributes) {
             String attributeValue = attribute.getValue();
             for (String idValue : allIDValues) {
                 // Check if the attribute value contains "PHYS_" + current ID value
                 if (attributeValue.contains("PHYS_" + idValue)) {
-                    logger.info("PHYS_" + idValue);
+                	if ("structLink".equals(parentElement.getName())) {
+                		logger.info("<mets:structLink> PHYS_" + idValue);
+                	} else {
+                		logger.info("PHYS_" + idValue);
+                	}
                 }
             }
         }
