@@ -191,48 +191,53 @@ public class FixForXmlFiles {
         List<String> tifValues = new ArrayList<>();
         List<String> tifDuplicatesList = new ArrayList<>();
         List<String> parentDirectory = new ArrayList<>();
-        
+
         try {
-        	SAXBuilder sax = new SAXBuilder();
+            SAXBuilder sax = new SAXBuilder();
             Document doc = sax.build(xmlFile);
             Element rootElement = doc.getRootElement();
-        
-        // Adds the .tif values to the list if they are duplicates and not already in the list
-        for (String tifElement : tifElementsList) {
-            if (!tifValues.contains(tifElement)) {
-                tifValues.add(tifElement);
-            } else {
-                duplicatesFound = true;
-                if (!tifDuplicatesList.contains(tifElement)) {
-                    logger.trace("Duplicate found that is not in list: " + tifElement);
-                    tifDuplicatesList.add(tifElement);
-                    logger.info("   " + tifElement);
-                    
-                 // Find and log information about the duplicate element and its parent directories
-                    findIDVlaueOfDuplicateLines(rootElement, tifElement);
+            List<String> allIDValues = new ArrayList<>();
+            
+            // Adds the .tif values to the list if they are duplicates and not already in the list
+            for (String tifElement : tifElementsList) {
+                if (!tifValues.contains(tifElement)) {
+                    tifValues.add(tifElement);
+                } else {
+                    duplicatesFound = true;
+                    if (!tifDuplicatesList.contains(tifElement)) {
+                        logger.trace("Duplicate found that is not in list: " + tifElement);
+                        tifDuplicatesList.add(tifElement);
+                        logger.info("   " + tifElement);
+
+                        // Find and log information about the duplicate element and its parent directories
+                        List<String> idValues = findIDValueOfDuplicateLines(rootElement, tifElement);
+                        allIDValues.addAll(idValues);
+                    }
                 }
             }
+            if (duplicatesFound) {
+                filesWithDuplicates++;
+                logger.trace(xmlFile.getAbsolutePath());
+                totalDuplicates += tifDuplicatesList.size();
+                File directoryAbove = xmlFile.getParentFile();
+                parentDirectory.add(directoryAbove.getName());
+                System.out.println(allIDValues);
+            }
+        } catch (JDOMException | IOException e) {
+            logger.error("Error processing XML file: " + xmlFile.getAbsolutePath(), e);
         }
-        if(duplicatesFound) {
-        	filesWithDuplicates++;
-            logger.trace(xmlFile.getAbsolutePath());
-            totalDuplicates += tifDuplicatesList.size();
-            File directoryAbove = xmlFile.getParentFile();
-            parentDirectory.add(directoryAbove.getName());
-        }
-      } catch (JDOMException | IOException e) {
-          logger.error("Error processing XML file: " + xmlFile.getAbsolutePath(), e);
-      }
-      return duplicatesFound;
+        return duplicatesFound;
     }
-    
+
     /**
      * Recursive method to find and log the duplicate element in the XML structure.
      *
-     * @param element The current XML element being checked.
-     * @param duplicateValue The duplicate value to be checked in attributes.
+     * @param element          The current XML element being checked.
+     * @param duplicateValue   The duplicate value to be checked in attributes.
+     * @return                 List of ID values associated with the duplicate element.
      */
-    void findIDVlaueOfDuplicateLines(Element element, String duplicateValue) {
+    List<String> findIDValueOfDuplicateLines(Element element, String duplicateValue) {
+        List<String> idValues = new ArrayList<>();
         // Check if the element is not null
         if (element != null) {
             // Check attributes of the element
@@ -245,10 +250,12 @@ public class FixForXmlFiles {
                     if (parentElement != null) {
                         Attribute idAttribute = parentElement.getAttribute("ID");
                         if (idAttribute != null) {
-                            logger.info("ID=\"" + idAttribute.getValue() + "\"");
+                            String idValue = idAttribute.getValue();
+                            logger.info("ID=\"" + idValue + "\"");
+                            idValues.add(idValue);
                         }
                     }
-                    return;
+                    return idValues;
                 }
             }
 
@@ -256,9 +263,10 @@ public class FixForXmlFiles {
             List<Element> children = element.getChildren();
             for (Element child : children) {
                 // Recursively check children
-            	findIDVlaueOfDuplicateLines(child, duplicateValue);
+                idValues.addAll(findIDValueOfDuplicateLines(child, duplicateValue));
             }
         }
+        return idValues;
     }
     /**
      * Generates a backup file for the given XML file by creating a copy with a timestamp in the filename.
