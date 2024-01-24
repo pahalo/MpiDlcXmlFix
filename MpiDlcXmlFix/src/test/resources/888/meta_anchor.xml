@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets OBJID="" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd" xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:goobi="http://meta.goobi.org/v1.5.1/" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <mets:metsHdr CREATEDATE="2019-12-11T16:26:51Z">
+      <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
+         <mets:name>Goobi - ea757 - 2018-12-15 22:05:35+0000</mets:name>
+         <mets:note>Goobi</mets:note>
+      </mets:agent>
+   </mets:metsHdr>
+   <mets:dmdSec ID="DMDLOG_0000">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="PublicationYear">1754 - 1762</goobi:metadata>
+                     <goobi:metadata name="PlaceOfPublication">Firenze</goobi:metadata>
+                     <goobi:metadata name="PublisherName">Viviani</goobi:metadata>
+                     <goobi:metadata name="shelfmarksource">L 373 (RARO)</goobi:metadata>
+                     <goobi:metadata name="singleDigCollection">Firenze Città Nobilissima</goobi:metadata>
+                     <goobi:metadata name="DocLanguage">ita</goobi:metadata>
+                     <goobi:metadata name="CatalogIDDigital">14968</goobi:metadata>
+                     <goobi:metadata name="TitleDocMain">Notizie istoriche delle chiese fiorentine divise ne' suoi quartieri</goobi:metadata>
+                     <goobi:metadata name="Note">opera di Giuseppe Richa</goobi:metadata>
+                     <goobi:metadata name="Copyright">opera di Giuseppe Richa</goobi:metadata>
+                     <goobi:metadata name="SizeSourcePrint">1 - 10</goobi:metadata>
+                     <goobi:metadata name="SizeSourcePrint">Ill.</goobi:metadata>
+                     <goobi:metadata name="SizeSourcePrint">4</goobi:metadata>
+                     <goobi:metadata name="CatalogIdentifier">BV038735869</goobi:metadata>
+                     <goobi:metadata name="Author" type="person">
+                        <goobi:lastName>Richa</goobi:lastName>
+                        <goobi:firstName>Giuseppe</goobi:firstName>
+                        <goobi:displayName>Richa, Giuseppe</goobi:displayName>
+                     </goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:structMap TYPE="LOGICAL">
+      <mets:div DMDID="DMDLOG_0000" ID="LOG_0000" TYPE="MultiVolumeWork">
+         <mets:div ID="LOG_0001" TYPE="Volume">
+            <mets:mptr LOCTYPE="URL" xlink:href=""/>
+         </mets:div>
+      </mets:div>
+   </mets:structMap>
+</mets:mets>
