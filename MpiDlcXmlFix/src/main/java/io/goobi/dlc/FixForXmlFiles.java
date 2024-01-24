@@ -209,7 +209,7 @@ public class FixForXmlFiles {
                         tifDuplicatesList.add(tifElement);
                         logger.info("   " + tifElement);
 
-                        // Find and log information about the duplicate element and its parent directories
+                        // Find the ID values of the parent elements
                         List<String> idValues = findIDValueOfDuplicateLines(rootElement, tifElement);
                         allIDValues.addAll(idValues);
                     }
@@ -217,11 +217,11 @@ public class FixForXmlFiles {
             }
             if (duplicatesFound) {
                 filesWithDuplicates++;
-                logger.trace(xmlFile.getAbsolutePath());
+                logger.info(xmlFile.getAbsolutePath());
                 totalDuplicates += tifDuplicatesList.size();
                 File directoryAbove = xmlFile.getParentFile();
                 parentDirectory.add(directoryAbove.getName());
-                System.out.println(allIDValues);
+                findPHYSValuesOfDuplicateLines(doc.getRootElement(), allIDValues);
             }
         } catch (JDOMException | IOException e) {
             logger.error("Error processing XML file: " + xmlFile.getAbsolutePath(), e);
@@ -251,8 +251,10 @@ public class FixForXmlFiles {
                         Attribute idAttribute = parentElement.getAttribute("ID");
                         if (idAttribute != null) {
                             String idValue = idAttribute.getValue();
+                            // Remove non-numeric characters and keep only numbers
+                            String numericIDValue = idValue.replaceAll("\\D", "");
                             logger.info("ID=\"" + idValue + "\"");
-                            idValues.add(idValue);
+                            idValues.add(numericIDValue);
                         }
                     }
                     return idValues;
@@ -268,6 +270,32 @@ public class FixForXmlFiles {
         }
         return idValues;
     }
+    
+    /**
+     * Finds and prints values containing "PHYS_" based on the given XML element and a list of ID values.
+     * @param element The XML element to explore.
+     * @param allIDValues The list of ID values to check against "PHYS_" attributes.
+     */
+    private void findPHYSValuesOfDuplicateLines(Element element, List<String> allIDValues) {
+        // Check attributes of the current element
+        List<Attribute> attributes = element.getAttributes();
+        for (Attribute attribute : attributes) {
+            String attributeValue = attribute.getValue();
+            for (String idValue : allIDValues) {
+                // Check if the attribute value contains "PHYS_" + current ID value
+                if (attributeValue.contains("PHYS_" + idValue)) {
+                    logger.info("PHYS_" + idValue);
+                }
+            }
+        }
+
+        // Recursively explore child elements
+        List<Element> children = element.getChildren();
+        for (Element child : children) {
+            findPHYSValuesOfDuplicateLines(child, allIDValues);
+        }
+    }
+    
     /**
      * Generates a backup file for the given XML file by creating a copy with a timestamp in the filename.
      *
