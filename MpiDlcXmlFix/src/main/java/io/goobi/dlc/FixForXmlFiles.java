@@ -192,12 +192,13 @@ public class FixForXmlFiles {
         List<String> tifDuplicatesList = new ArrayList<>();
         List<String> parentDirectory = new ArrayList<>();
 
+        logger.info(xmlFile.getAbsolutePath());
         try {
             SAXBuilder sax = new SAXBuilder();
             Document doc = sax.build(xmlFile);
             Element rootElement = doc.getRootElement();
-            List<String> allIDValues = new ArrayList<>();
-            
+            List<String> allFileIDValues = new ArrayList<>();
+            List<String> allPHYSValues = new ArrayList<>();
             // Adds the .tif values to the list if they are duplicates and not already in the list
             for (String tifElement : tifElementsList) {
                 if (!tifValues.contains(tifElement)) {
@@ -211,17 +212,21 @@ public class FixForXmlFiles {
 
                         // Find the ID values of the parent elements
                         List<String> idValues = findIDValueOfDuplicateLines(rootElement, tifElement);
-                        allIDValues.addAll(idValues);
+                        allFileIDValues.addAll(idValues);
+                        
                     }
                 }
             }
             if (duplicatesFound) {
                 filesWithDuplicates++;
-                logger.info(xmlFile.getAbsolutePath());
                 totalDuplicates += tifDuplicatesList.size();
                 File directoryAbove = xmlFile.getParentFile();
                 parentDirectory.add(directoryAbove.getName());
-                findPHYSValuesOfDuplicateLines(doc.getRootElement(), allIDValues);
+                for (String FILEID : allFileIDValues) {
+                	List<String> idValues = findIDValueOfDuplicateLines(rootElement, FILEID);
+                	allPHYSValues.addAll(idValues);	
+                }
+                findPHYSValuesOfDuplicateLines(doc.getRootElement(), allPHYSValues);
             }
         } catch (JDOMException | IOException e) {
             logger.error("Error processing XML file: " + xmlFile.getAbsolutePath(), e);
@@ -237,6 +242,7 @@ public class FixForXmlFiles {
      * @return                 List of ID values associated with the duplicate element.
      */
     List<String> findIDValueOfDuplicateLines(Element element, String duplicateValue) {
+        
         List<String> idValues = new ArrayList<>();
         // Check if the element is not null
         if (element != null) {
@@ -251,10 +257,8 @@ public class FixForXmlFiles {
                         Attribute idAttribute = parentElement.getAttribute("ID");
                         if (idAttribute != null) {
                             String idValue = idAttribute.getValue();
-                            // Remove non-numeric characters and keep only numbers
-                            String numericIDValue = idValue.replaceAll("\\D", "");
                             logger.info("ID=\"" + idValue + "\"");
-                            idValues.add(numericIDValue);
+                            idValues.add(idValue);
                         }
                     }
                     return idValues;
@@ -281,15 +285,21 @@ public class FixForXmlFiles {
         List<Attribute> attributes = element.getAttributes();
         Element parentElement = element.getParentElement();
         
+        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+
+        // Output the element with its attributes
+        String elementString = xmlOutputter.outputString(element);
+        
         for (Attribute attribute : attributes) {
             String attributeValue = attribute.getValue();
             for (String idValue : allIDValues) {
                 // Check if the attribute value contains "PHYS_" + current ID value
-                if (attributeValue.contains("PHYS_" + idValue)) {
+                if (attributeValue.contains(idValue)) {
                 	if ("structLink".equals(parentElement.getName())) {
-                		logger.info("<mets:structLink> PHYS_" + idValue);
+                		//logger.info("<mets:structLink> PHYS_" + idValue);
+                		logger.info("Element: " + elementString);
                 	} else {
-                		logger.info("PHYS_" + idValue);
+                		logger.info(idValue);
                 	}
                 }
             }
