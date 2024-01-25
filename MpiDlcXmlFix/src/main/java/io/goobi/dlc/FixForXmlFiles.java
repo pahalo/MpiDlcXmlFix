@@ -1,6 +1,7 @@
 package io.goobi.dlc;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -198,7 +199,6 @@ public class FixForXmlFiles {
             Document doc = sax.build(xmlFile);
             Element rootElement = doc.getRootElement();
             List<String> allFileIDValues = new ArrayList<>();
-            List<String> allPHYSValues = new ArrayList<>();
             // Adds the .tif values to the list if they are duplicates and not already in the list
             for (String tifElement : tifElementsList) {
                 if (!tifValues.contains(tifElement)) {
@@ -211,10 +211,22 @@ public class FixForXmlFiles {
                         logger.info("   " + tifElement);
 
                         // Find the ID values of the parent elements
-                        List<String> idValues = findIDValueOfDuplicateLines(rootElement, tifElement);
-                        allFileIDValues.addAll(idValues);
+                        List<String> fileIDValues = findIDValueOfDuplicateLines(rootElement, tifElement);
+                        allFileIDValues.addAll(fileIDValues);
                         
+                        
+                        for (int i = 1; i < fileIDValues.size(); i++) {
+                            String FILEID = fileIDValues.get(i);
+                            System.out.println(FILEID);
+                            List<String> physIDValues = findIDValueOfDuplicateLines(rootElement, FILEID);
+                            findPHYSValuesOfDuplicateLines(doc.getRootElement(), physIDValues, xmlFile);
+                            
+                            // Call a method that replaces the right values in mets:structLink
+                        }
+                        System.out.println(fileIDValues);
+                        fileIDValues.clear();
                     }
+                    
                 }
             }
             if (duplicatesFound) {
@@ -222,11 +234,7 @@ public class FixForXmlFiles {
                 totalDuplicates += tifDuplicatesList.size();
                 File directoryAbove = xmlFile.getParentFile();
                 parentDirectory.add(directoryAbove.getName());
-                for (String FILEID : allFileIDValues) {
-                	List<String> idValues = findIDValueOfDuplicateLines(rootElement, FILEID);
-                	allPHYSValues.addAll(idValues);	
-                }
-                findPHYSValuesOfDuplicateLines(doc.getRootElement(), allPHYSValues);
+                
             }
         } catch (JDOMException | IOException e) {
             logger.error("Error processing XML file: " + xmlFile.getAbsolutePath(), e);
@@ -259,9 +267,9 @@ public class FixForXmlFiles {
                             String idValue = idAttribute.getValue();
                             logger.info("ID=\"" + idValue + "\"");
                             idValues.add(idValue);
+                            return idValues;
                         }
                     }
-                    return idValues;
                 }
             }
 
@@ -280,11 +288,11 @@ public class FixForXmlFiles {
      * @param element The XML element to explore.
      * @param allIDValues The list of ID values to check against "PHYS_" attributes.
      */
-    private void findPHYSValuesOfDuplicateLines(Element element, List<String> allIDValues) {
+     void findPHYSValuesOfDuplicateLines(Element element, List<String> allIDValues, File xmlFile) {
         // Check attributes of the current element
         List<Attribute> attributes = element.getAttributes();
         Element parentElement = element.getParentElement();
-        
+        boolean changesMade = false;
         XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
 
         // Output the element with its attributes
@@ -293,22 +301,47 @@ public class FixForXmlFiles {
         for (Attribute attribute : attributes) {
             String attributeValue = attribute.getValue();
             for (String idValue : allIDValues) {
-                // Check if the attribute value contains "PHYS_" + current ID value
+                // Check if the attribute value is equal the current ID value
                 if (attributeValue.contains(idValue)) {
                 	if ("structLink".equals(parentElement.getName())) {
                 		//logger.info("<mets:structLink> PHYS_" + idValue);
                 		logger.info("Element: " + elementString);
+                		attribute.setValue("New Value");
+                		changesMade = true;
                 	} else {
                 		logger.info(idValue);
                 	}
                 }
             }
         }
-
+        
+        // If changes were made, save the document
+        if (changesMade) {
+            saveDocument(element.getDocument(), xmlFile);
+        }
         // Recursively explore child elements
         List<Element> children = element.getChildren();
         for (Element child : children) {
-            findPHYSValuesOfDuplicateLines(child, allIDValues);
+            findPHYSValuesOfDuplicateLines(child, allIDValues, xmlFile);
+        }
+    }
+    // Method to save the updated document to the file
+     void saveDocument(Document document, File xmlFile) {
+        try {
+
+            // Create a FileWriter to overwrite the XML file
+        	FileWriter writer = new FileWriter(xmlFile);
+
+            // Output the updated XML document to the file
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+            xmlOutputter.output(document, writer);
+
+            // Close the FileWriter
+            writer.close();
+
+            logger.info("XML file successfully edited and saved.");
+        } catch (IOException e) {
+            logger.error("Error saving the XML file: " + e.getMessage());
         }
     }
     

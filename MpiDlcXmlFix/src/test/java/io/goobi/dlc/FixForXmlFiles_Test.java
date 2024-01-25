@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
@@ -152,7 +153,7 @@ class FixForXmlFiles_Test {
                     "00001.tif", "00002.tif",
                     "00003.tif", "00003.tif",
                     "00004.tif");
-            File xmlFile = new File("/Users/paul/git/xmlMitPaul/src/test/resources/183112/meta.xml");
+            File xmlFile = new File("src/test/resources/183112/meta.xml");
 
             FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
             boolean result = fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile);
@@ -168,7 +169,8 @@ class FixForXmlFiles_Test {
                     "00001.tif", "00001.tif",
                     "00001.tif", "00001.tif",
                     "00001.tif");
-            File xmlFile = new File("/src/test/resources/183112/meta.xml");
+            File xmlFile = new File("src/test/resources/183112/meta.xml");
+
 
             FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
             boolean result = fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile);
@@ -184,7 +186,7 @@ class FixForXmlFiles_Test {
                     "00002.tif", "00003.tif",
                     "00004.tif", "00005.tif",
                     "00001.tif");
-            File xmlFile = new File("/src/test/resources/183112/meta.xml");
+            File xmlFile = new File("src/test/resources/183112/meta.xml");
 
             FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
             boolean result = fixForXmlFiles.findDuplicates(xmlElementsList, xmlFile);
@@ -195,6 +197,31 @@ class FixForXmlFiles_Test {
         }
 
     }
+    
+    @Test
+    void testFindIDValueOfDuplicateLines() {
+        FixForXmlFiles fixForXmlFiles = new FixForXmlFiles();
+
+//		 This is what it what it looks like: 
+//        <mets:file ID="FILE_0271" MIMETYPE="">
+//        	<mets:FLocat LOCTYPE="URL" xlink:href="00000265.tif"/>
+//        </mets:file>
+        
+        // Create the sample XML document directly as an element
+        Namespace metsNamespace = Namespace.getNamespace("mets", "http://www.loc.gov/METS/");
+        Element fileElement = new Element("file", metsNamespace);
+        fileElement.setAttribute("ID", "FILE_0271");
+        fileElement.setAttribute("MIMETYPE", "");
+        Element fLocatElement = new Element("FLocat", metsNamespace);
+        fLocatElement.setAttribute("LOCTYPE", "URL", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
+        fLocatElement.setAttribute("href", "00000265.tif", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
+        fileElement.addContent(fLocatElement);
+
+        // Test if the method extracts the correct ID value associated with the duplicate TIF value
+        List<String> result = fixForXmlFiles.findIDValueOfDuplicateLines(fileElement, "00000265.tif");
+        assertEquals("FILE_0271", result.get(0)); 
+    }
+
 
     @Test
     void testGenerateBackupFile() {
