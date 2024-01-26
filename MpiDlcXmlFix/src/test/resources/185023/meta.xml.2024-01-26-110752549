@@ -599,7 +599,7 @@
     <mets:smLink xlink:to="PHYS_0035" xlink:from="LOG_0000" />
     <mets:smLink xlink:to="PHYS_0036" xlink:from="LOG_0000" />
     <mets:smLink xlink:to="PHYS_0037" xlink:from="LOG_0000" />
-    <mets:smLink xlink:to="New Value" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0037" xlink:from="LOG_0000" />
     <mets:smLink xlink:to="PHYS_0039" xlink:from="LOG_0000" />
     <mets:smLink xlink:to="PHYS_0040" xlink:from="LOG_0000" />
     <mets:smLink xlink:to="PHYS_0041" xlink:from="LOG_0000" />
@@ -656,7 +656,7 @@
     <mets:smLink xlink:to="PHYS_0035" xlink:from="LOG_0007" />
     <mets:smLink xlink:to="PHYS_0036" xlink:from="LOG_0007" />
     <mets:smLink xlink:to="PHYS_0037" xlink:from="LOG_0008" />
-    <mets:smLink xlink:to="New Value" xlink:from="LOG_0009" />
+    <mets:smLink xlink:to="PHYS_0037" xlink:from="LOG_0009" />
     <mets:smLink xlink:to="PHYS_0039" xlink:from="LOG_0009" />
     <mets:smLink xlink:to="PHYS_0040" xlink:from="LOG_0009" />
     <mets:smLink xlink:to="PHYS_0041" xlink:from="LOG_0009" />

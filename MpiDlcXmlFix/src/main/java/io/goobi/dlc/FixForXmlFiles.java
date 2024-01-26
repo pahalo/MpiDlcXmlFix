@@ -192,7 +192,7 @@ public class FixForXmlFiles {
         List<String> tifValues = new ArrayList<>();
         List<String> tifDuplicatesList = new ArrayList<>();
         List<String> parentDirectory = new ArrayList<>();
-
+        List<String> physIDValues = new ArrayList<>();
         logger.info(xmlFile.getAbsolutePath());
         try {
             SAXBuilder sax = new SAXBuilder();
@@ -214,16 +214,13 @@ public class FixForXmlFiles {
                         List<String> fileIDValues = findIDValueOfDuplicateLines(rootElement, tifElement);
                         allFileIDValues.addAll(fileIDValues);
                         
-                        
-                        for (int i = 1; i < fileIDValues.size(); i++) {
+                        for (int i = 0; i < fileIDValues.size(); i++) {
                             String FILEID = fileIDValues.get(i);
-                            System.out.println(FILEID);
-                            List<String> physIDValues = findIDValueOfDuplicateLines(rootElement, FILEID);
-                            findPHYSValuesOfDuplicateLines(doc.getRootElement(), physIDValues, xmlFile);
-                            
-                            // Call a method that replaces the right values in mets:structLink
+                            physIDValues.addAll(findIDValueOfDuplicateLines(rootElement, FILEID));
                         }
-                        System.out.println(fileIDValues);
+                        System.out.println(physIDValues);
+                        findPHYSValuesOfDuplicateLines(doc.getRootElement(), physIDValues, xmlFile);
+                        physIDValues.clear();
                         fileIDValues.clear();
                     }
                     
@@ -288,7 +285,7 @@ public class FixForXmlFiles {
      * @param element The XML element to explore.
      * @param allIDValues The list of ID values to check against "PHYS_" attributes.
      */
-     void findPHYSValuesOfDuplicateLines(Element element, List<String> allIDValues, File xmlFile) {
+     void findPHYSValuesOfDuplicateLines(Element element, List<String> physIDValues, File xmlFile) {
         // Check attributes of the current element
         List<Attribute> attributes = element.getAttributes();
         Element parentElement = element.getParentElement();
@@ -300,16 +297,19 @@ public class FixForXmlFiles {
         
         for (Attribute attribute : attributes) {
             String attributeValue = attribute.getValue();
-            for (String idValue : allIDValues) {
+            for (String physIDValue : physIDValues) {
                 // Check if the attribute value is equal the current ID value
-                if (attributeValue.contains(idValue)) {
+                if (attributeValue.contains(physIDValue)) {
                 	if ("structLink".equals(parentElement.getName())) {
                 		//logger.info("<mets:structLink> PHYS_" + idValue);
                 		logger.info("Element: " + elementString);
-                		attribute.setValue("New Value");
+                		// Getting the Value that should be there
+                		String newValue = physIDValues.get(0);
+                		// Setting the Value
+                		attribute.setValue(newValue);
                 		changesMade = true;
                 	} else {
-                		logger.info(idValue);
+                		logger.info(physIDValue);
                 	}
                 }
             }
@@ -322,7 +322,7 @@ public class FixForXmlFiles {
         // Recursively explore child elements
         List<Element> children = element.getChildren();
         for (Element child : children) {
-            findPHYSValuesOfDuplicateLines(child, allIDValues, xmlFile);
+            findPHYSValuesOfDuplicateLines(child, physIDValues, xmlFile);
         }
     }
     // Method to save the updated document to the file

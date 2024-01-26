@@ -1495,8 +1495,8 @@
     <mets:smLink xlink:to="PHYS_0139" xlink:from="LOG_0000" />
     <mets:smLink xlink:to="PHYS_0140" xlink:from="LOG_0000" />
     <mets:smLink xlink:to="PHYS_0141" xlink:from="LOG_0000" />
-    <mets:smLink xlink:to="New Value" xlink:from="LOG_0000" />
-    <mets:smLink xlink:to="New Value" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0015" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0016" xlink:from="LOG_0000" />
     <mets:smLink xlink:to="PHYS_0001" xlink:from="LOG_0001" />
     <mets:smLink xlink:to="PHYS_0002" xlink:from="LOG_0001" />
     <mets:smLink xlink:to="PHYS_0003" xlink:from="LOG_0002" />
@@ -1677,9 +1677,9 @@
     <mets:smLink xlink:to="PHYS_0139" xlink:from="LOG_0027" />
     <mets:smLink xlink:to="PHYS_0140" xlink:from="LOG_0027" />
     <mets:smLink xlink:to="PHYS_0141" xlink:from="LOG_0028" />
-    <mets:smLink xlink:to="New Value" xlink:from="LOG_0029" />
-    <mets:smLink xlink:to="New Value" xlink:from="LOG_0029" />
-    <mets:smLink xlink:to="New Value" xlink:from="LOG_0030" />
-    <mets:smLink xlink:to="New Value" xlink:from="LOG_0030" />
+    <mets:smLink xlink:to="PHYS_0015" xlink:from="LOG_0029" />
+    <mets:smLink xlink:to="PHYS_0016" xlink:from="LOG_0029" />
+    <mets:smLink xlink:to="PHYS_0015" xlink:from="LOG_0030" />
+    <mets:smLink xlink:to="PHYS_0016" xlink:from="LOG_0030" />
   </mets:structLink>
 </mets:mets>
