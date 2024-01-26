@@ -6,10 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.Format;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,10 +21,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class FixForXmlFiles_Test {
     private static final Logger logger = LogManager.getLogger(FixForXmlFiles.class);
@@ -221,7 +227,14 @@ class FixForXmlFiles_Test {
         List<String> result = fixForXmlFiles.findIDValueOfDuplicateLines(fileElement, "00000265.tif");
         assertEquals("FILE_0271", result.get(0)); 
     }
+    
+    @Test
+    void testFindAndRewritePHYSValuesOfDuplicateLines(){
+    	
+    }
 
+
+    
 
     @Test
     void testGenerateBackupFile() {
