@@ -239,6 +239,8 @@ public class FixForXmlFiles {
                 totalDuplicates += tifDuplicatesList.size();
                 File directoryAbove = xmlFile.getParentFile();
                 parentDirectory.add(directoryAbove.getName());
+                recountingOrder(doc.getRootElement(), 0);
+                saveDocument(rootElement.getDocument(), xmlFile);
             }
         } catch (JDOMException | IOException e) {
             logger.error("Error processing XML file: " + xmlFile.getAbsolutePath(), e);
@@ -360,13 +362,10 @@ public class FixForXmlFiles {
         	    for (org.jdom2.Attribute attribute : attributes) {
         	        // Check if the value of the attribute is contained in either of the lists
         	        if((attribute.getName().equals("ID"))) {
-        	            // Removing the first Element of the list because this one should remain untouched
         	            String value = attribute.getValue();
         	            if ((fileIDValues.contains(value))) {
-        	            	System.out.println(value );
         	                elementsToRemove.add(element);
         	            } else if((physIDValues.contains(value))){
-        	            	System.out.println(value);
         	                elementsToRemove.add(element);
         	            } 
         	        }
@@ -378,6 +377,21 @@ public class FixForXmlFiles {
         	    }
         	}
         
+        public static int recountingOrder(Element element, int orderValue) {
+            List<Attribute> attributes = element.getAttributes();
+            for (Attribute attribute : attributes) {
+                if ("ORDER".equals(attribute.getName())) {
+                    attribute.setValue(Integer.toString(orderValue));
+                    orderValue++;
+                }
+            }
+
+            List<Element> children = element.getChildren();
+            for (Element child : children) {
+                orderValue = recountingOrder(child, orderValue);
+            }
+            return orderValue;
+        }
     // Method to save the updated document to the file
      Boolean saveDocument(Document document, File xmlFile) {
         try {
