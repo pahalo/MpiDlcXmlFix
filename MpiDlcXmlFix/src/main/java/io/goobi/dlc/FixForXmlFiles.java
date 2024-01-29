@@ -30,8 +30,6 @@ public class FixForXmlFiles {
     private static final Logger logger = LogManager.getLogger(FixForXmlFiles.class);
     private int filesWithDuplicates = 0;
     private int totalDuplicates = 0;
-    private static int ID1 = 0;
-    private static int ID2 = 0;
 
     /**
      * The main entry point of the application for processing XML files
@@ -220,7 +218,6 @@ public class FixForXmlFiles {
                             String FILEID = fileIDValues.get(i);
                             physIDValues.addAll(findIDValueOfDuplicateLines(rootElement, FILEID));
                         }
-                        logger.info("PHYSIDValues: " + physIDValues);
                         findAndRewritePHYSValuesOfDuplicateLines(doc.getRootElement(), physIDValues, xmlFile);
                         
                         // Remove the first Object in the List so we dont delete it from the xml file
@@ -242,10 +239,6 @@ public class FixForXmlFiles {
                 totalDuplicates += tifDuplicatesList.size();
                 File directoryAbove = xmlFile.getParentFile();
                 parentDirectory.add(directoryAbove.getName());
-                System.out.println(ID1);
-                System.out.println(ID2);
-                ID1 = 0;
-                ID2 = 0;
             }
         } catch (JDOMException | IOException e) {
             logger.error("Error processing XML file: " + xmlFile.getAbsolutePath(), e);
@@ -316,14 +309,14 @@ public class FixForXmlFiles {
                 if (attributeValue.contains(physIDValue)) {
                 	if ("structLink".equals(parentElement.getName())) {
                 		//logger.info("<mets:structLink> PHYS_" + idValue);
-                		logger.info("Element: " + elementString);
+                		logger.trace("Element: " + elementString);
                 		// Getting the Value that should be there
                 		String newValue = physIDValues.get(0);
                 		// Setting the Value
                 		attribute.setValue(newValue);
                 		changesMade = true;
                 	} else {
-                		logger.info(physIDValue);
+                		logger.trace(physIDValue);
                 	}
                 }
             }
@@ -333,7 +326,7 @@ public class FixForXmlFiles {
         if (changesMade) {
             changesMade = saveDocument(element.getDocument(), xmlFile);
             if(changesMade) {
-                logger.info("XML file successfully edited and saved.");
+                logger.trace("XML file successfully edited and saved.");
             }
         }
         // Recursively explore child elements
@@ -343,52 +336,48 @@ public class FixForXmlFiles {
         }
         return changesMade;
     }
-     private void traverseElement(Element element, List<String> fileIDValues, List<String> physIDValues, List<Element> elementsToRemove) { 
-    	    List<org.jdom2.Attribute> attributes = element.getAttributes();
-    	    for (org.jdom2.Attribute attribute : attributes) {
-    	        // Check if the value of the attribute is contained in either of the lists
-    	        if((attribute.getName().equals("ID"))) {
-    	            // Removing the first Element of the list because this one shall stay
-    	            String value = attribute.getValue();
-    	            if ((fileIDValues.contains(value))) {
-    	                ID1 ++;
-    	                elementsToRemove.add(element);
-    	            } else if((physIDValues.contains(value))){
-    	                ID2 ++;
-    	                elementsToRemove.add(element);
-    	            } 
-    	        }
-    	    }
-    	    
-    	    List<Element> children = new ArrayList<>(element.getChildren());
-    	    for (Element child : children) {
-    	        traverseElement(child, fileIDValues, physIDValues, elementsToRemove);
-    	    }
-    	}
+     
+     
+    boolean rewriteMetsDivAndFile(Element element, List<String> fileIDValues, List<String> physIDValues, File xmlFile) {
+        // Traverse the element to find elements to remove
+		List<Element> elementsToRemove = new ArrayList<>();
+		traverseElement(element, fileIDValues, physIDValues, elementsToRemove);
 
-    	public boolean rewriteMetsDivAndFile(Element element, List<String> fileIDValues, List<String> physIDValues, File xmlFile) {
-    	    try {
-    	        SAXBuilder sax = new SAXBuilder();
-    	        Document doc = sax.build(xmlFile);
-    	        Element rootElement = doc.getRootElement();
-    	        
-    	        List<Element> elementsToRemove = new ArrayList<>();
-    	        traverseElement(rootElement, fileIDValues, physIDValues, elementsToRemove);
-    	        
-    	        // Remove elements from the document after traversal
-    	        for (Element e : elementsToRemove) {
-    	            e.detach(); // Remove element from its parent
-    	        }
-    	        
-    	        // Write the modified document back to the XML file
-    	        XMLOutputter xmlOutput = new XMLOutputter();
-    	        xmlOutput.output(doc, new FileWriter(xmlFile));
-    	        
-    	    } catch (JDOMException | IOException e) {
-    	        return false;
-    	    }
-    	    return true;
-    	}
+		// Remove elements from the document after traversal
+		for (Element e : elementsToRemove) {
+		    e.removeContent(); // Remove all children of the element
+		    e.getParentElement().removeContent(e); // Remove the element itself from its parent
+		}
+
+		// Write the modified document back to the XML file
+		saveDocument(element.getDocument(), xmlFile);
+        return true;
+    }
+    	
+
+        void traverseElement(Element element, List<String> fileIDValues, List<String> physIDValues, List<Element> elementsToRemove) { 
+        	    List<org.jdom2.Attribute> attributes = element.getAttributes();
+        	    for (org.jdom2.Attribute attribute : attributes) {
+        	        // Check if the value of the attribute is contained in either of the lists
+        	        if((attribute.getName().equals("ID"))) {
+        	            // Removing the first Element of the list because this one should remain untouched
+        	            String value = attribute.getValue();
+        	            if ((fileIDValues.contains(value))) {
+        	            	System.out.println(value );
+        	                elementsToRemove.add(element);
+        	            } else if((physIDValues.contains(value))){
+        	            	System.out.println(value);
+        	                elementsToRemove.add(element);
+        	            } 
+        	        }
+        	    }
+        	    
+        	    List<Element> children = new ArrayList<>(element.getChildren());
+        	    for (Element child : children) {
+        	        traverseElement(child, fileIDValues, physIDValues, elementsToRemove);
+        	    }
+        	}
+        
     // Method to save the updated document to the file
      Boolean saveDocument(Document document, File xmlFile) {
         try {
