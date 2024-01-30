@@ -61,13 +61,6 @@ public class FixForXmlFiles {
                         boolean hasDuplicates = fixer.findDuplicates(tifElementsList, file);
                         if (hasDuplicates) {
                         	folderList.add(new File(file.getParent()).getName());
-                        	
-                            // Generate BackupFiles of the Files with duplicates tif values
-                            try {
-                                fixer.generateBackupFile(file);
-                            } catch (IOException e) {
-                                logger.error("Error creating backup file for: " + file.getAbsolutePath(), e);
-                            }
                         }
                     }
                 }
@@ -198,27 +191,39 @@ public class FixForXmlFiles {
             SAXBuilder sax = new SAXBuilder();
             Document doc = sax.build(xmlFile);
             Element rootElement = doc.getRootElement();
-            List<String> allFileIDValues = new ArrayList<>();
+            
             // Adds the .tif values to the list if they are duplicates and not already in the list
             for (String tifElement : tifElementsList) {
                 if (!tifValues.contains(tifElement)) {
                     tifValues.add(tifElement);
                 } else {
+                	// Generate BackupFiles of the Files with duplicates tif values 
+                	if(!duplicatesFound) {
+                        try {
+                            generateBackupFile(xmlFile);
+                            logger.info("Backup created");
+                        } catch (IOException e) {
+                            logger.error("Error creating backup file for: " + xmlFile.getAbsolutePath(), e);
+                        }
+                	}
+                	//Setting duplicates found to true so it wont create new BackupFiles
                     duplicatesFound = true;
+                    
+                    // Finding duplicate tif Elements
                     if (!tifDuplicatesList.contains(tifElement)) {
                         logger.trace("Duplicate found that is not in list: " + tifElement);
                         tifDuplicatesList.add(tifElement);
                         logger.info("   " + tifElement);
 
                         // Find the ID values of the parent elements
-                        List<String> fileIDValues = findIDValueOfDuplicateLines(rootElement, tifElement);
-                        allFileIDValues.addAll(fileIDValues);
+                        List<String> fileIDValues = findIDValueOfDuplicateTifValues(rootElement, tifElement);
                         
+                        // Find the Phys values of the parent elements
                         for (int i = 0; i < fileIDValues.size(); i++) {
                             String FILEID = fileIDValues.get(i);
-                            physIDValues.addAll(findIDValueOfDuplicateLines(rootElement, FILEID));
+                            physIDValues.addAll(findIDValueOfDuplicateTifValues(rootElement, FILEID));
                         }
-                        findAndRewritePHYSValuesOfDuplicateLines(doc.getRootElement(), physIDValues, xmlFile);
+                        findAndRewritePHYSValuesOfDuplicateTifValues(doc.getRootElement(), physIDValues, xmlFile);
                         
                         // Remove the first Object in the List so we dont delete it from the xml file
                         if (!fileIDValues.isEmpty()) {
@@ -241,6 +246,7 @@ public class FixForXmlFiles {
                 parentDirectory.add(directoryAbove.getName());
                 recountingOrder(doc.getRootElement(), 0);
                 saveDocument(rootElement.getDocument(), xmlFile);
+                logger.info("Document changes saved");
             }
         } catch (JDOMException | IOException e) {
             logger.error("Error processing XML file: " + xmlFile.getAbsolutePath(), e);
@@ -249,13 +255,13 @@ public class FixForXmlFiles {
     }
 
     /**
-     * Recursive method to find and log the duplicate element in the XML structure.
+     * Recursive method to find File ID Values and PHYS ID Values
      *
      * @param element The current XML element being checked.
      * @param duplicateValue The duplicate value to be checked in attributes.
      * @return List of ID values associated with the duplicate element.
      */
-    List<String> findIDValueOfDuplicateLines(Element element, String duplicateValue) {
+    List<String> findIDValueOfDuplicateTifValues(Element element, String duplicateValue) {
         
         List<String> idValues = new ArrayList<>();
         // Check if the element is not null
@@ -283,18 +289,19 @@ public class FixForXmlFiles {
             List<Element> children = element.getChildren();
             for (Element child : children) {
                 // Recursively check children
-                idValues.addAll(findIDValueOfDuplicateLines(child, duplicateValue));
+                idValues.addAll(findIDValueOfDuplicateTifValues(child, duplicateValue));
             }
         }
         return idValues;
     }
     
     /**
-     * Finds and prints values containing "PHYS_" based on the given XML element and a list of ID values.
+     * Finds values containing "PHYS_" based on the given XML element and the list of ID values.
+     * 
      * @param element The XML element to explore.
      * @param allIDValues The list of ID values to check against "PHYS_" attributes.
      */
-     Boolean findAndRewritePHYSValuesOfDuplicateLines(Element element, List<String> physIDValues, File xmlFile) {
+     Boolean findAndRewritePHYSValuesOfDuplicateTifValues(Element element, List<String> physIDValues, File xmlFile) {
         // Check attributes of the current element
         List<Attribute> attributes = element.getAttributes();
         Element parentElement = element.getParentElement();
@@ -326,80 +333,125 @@ public class FixForXmlFiles {
         // Recursively explore child elements
         List<Element> children = element.getChildren();
         for (Element child : children) {
-        	findAndRewritePHYSValuesOfDuplicateLines(child, physIDValues, xmlFile);
+        	findAndRewritePHYSValuesOfDuplicateTifValues(child, physIDValues, xmlFile);
         }
         return changesMade;
     }
      
      
-    boolean rewriteMetsDivAndFile(Element element, List<String> fileIDValues, List<String> physIDValues, File xmlFile) {
-        // Traverse the element to find elements to remove
-		List<Element> elementsToRemove = new ArrayList<>();
-		traverseElement(element, fileIDValues, physIDValues, elementsToRemove);
+     /**
+      * Rewrites the metadata and file, removing elements from the provided element
+      * if their ID attribute matches values from either of the given lists.
+      *
+      * @param element The XML element to traverse and modify.
+      * @param fileIDValues List of file ID values to match against.
+      * @param physIDValues List of physical ID values to match against.
+      * @param xmlFile The XML file to rewrite after modifications.
+      * @return True if the rewrite operation is successful.
+      */
+     boolean rewriteMetsDivAndFile(Element element, List<String> fileIDValues, List<String> physIDValues, File xmlFile) {
+         // Traverse the element to find elements to remove
+         List<Element> elementsToRemove = new ArrayList<>();
+         traverseElement(element, fileIDValues, physIDValues, elementsToRemove);
 
-		// Remove elements from the document after traversal
-		for (Element e : elementsToRemove) {
-		    e.removeContent(); // Remove all children of the element
-		    e.getParentElement().removeContent(e); // Remove the element itself from its parent
-		}
-        return true;
-    }
-    	
+         // Remove elements from the document after traversal
+         for (Element e : elementsToRemove) {
+             e.removeContent(); // Remove all children of the element
+             e.getParentElement().removeContent(e); // Remove the element itself from its parent
+         }
+         return true;
+     }
 
-        void traverseElement(Element element, List<String> fileIDValues, List<String> physIDValues, List<Element> elementsToRemove) { 
-        	    List<org.jdom2.Attribute> attributes = element.getAttributes();
-        	    for (org.jdom2.Attribute attribute : attributes) {
-        	        // Check if the value of the attribute is contained in either of the lists
-        	        if((attribute.getName().equals("ID"))) {
-        	            String value = attribute.getValue();
-        	            if ((fileIDValues.contains(value))) {
-        	                elementsToRemove.add(element);
-        	            } else if((physIDValues.contains(value))){
-        	                elementsToRemove.add(element);
-        	            } 
-        	        }
-        	    }
-        	    
-        	    List<Element> children = new ArrayList<>(element.getChildren());
-        	    for (Element child : children) {
-        	        traverseElement(child, fileIDValues, physIDValues, elementsToRemove);
-        	    }
-        	}
-        
-        public static int recountingOrder(Element element, int orderValue) {
-            List<Attribute> attributes = element.getAttributes();
-            for (Attribute attribute : attributes) {
-                if ("ORDER".equals(attribute.getName())) {
-                    attribute.setValue(Integer.toString(orderValue));
-                    orderValue++;
-                }
-            }
+     /**
+      * Traverses the XML element recursively, adding elements to remove if their
+      * ID attribute matches values from either of the given lists.
+      *
+      * @param element The current XML element being traversed.
+      * @param fileIDValues List of file ID values to match against.
+      * @param physIDValues List of physical ID values to match against.
+      * @param elementsToRemove List to store elements to be removed.
+      * @return list of elements to be removed.
+      */
+     List<Element> traverseElement(Element element, List<String> fileIDValues, List<String> physIDValues, List<Element> elementsToRemove) {
+         // Get attributes of the current XML element
+         List<org.jdom2.Attribute> attributes = element.getAttributes();
+         // Iterate over each attribute
+         for (org.jdom2.Attribute attribute : attributes) {
+             // Check if the attribute name is 'ID'
+             if (("ID").equals(attribute.getName())) {
+                 String value = attribute.getValue();
+                 // Check if the value of the attribute is contained in either of the lists
+                 if (fileIDValues.contains(value) || physIDValues.contains(value)) {
+                     // Add the element to the list of elements to be removed
+                     elementsToRemove.add(element);
+                     break; // Break loop if found in either list
+                 }
+             }
+         }
 
-            List<Element> children = element.getChildren();
-            for (Element child : children) {
-                orderValue = recountingOrder(child, orderValue);
-            }
-            return orderValue;
-        }
-    // Method to save the updated document to the file
+         // Get children elements of the current XML element and Iterate over them
+         List<Element> children = new ArrayList<>(element.getChildren());
+         for (Element child : children) {
+             // Recursively traverse children elements
+             traverseElement(child, fileIDValues, physIDValues, elementsToRemove);
+         }
+         // Return the list of elements to be removed
+         return elementsToRemove;
+     }
+
+     /**
+      * Recounts the order attribute of each element recursively starting from
+      * the provided order value.
+      *
+      * @param element The XML element to start recounting order from.
+      * @param orderValue The starting value for the order attribute.
+      * @return The next available order value after recounting.
+      */
+     int recountingOrder(Element element, int orderValue) {
+    	// Get all attributes of the current XML element
+    	    List<Attribute> attributes = element.getAttributes();
+    	    // Iterate over each attribute
+    	    for (Attribute attribute : attributes) {
+    	        // Check if the attribute is 'ORDER'
+    	        if ("ORDER".equals(attribute.getName())) {
+    	        	orderValue++;
+    	        	 // Set the value of the 'ORDER' attribute to the current orderValue
+    	            attribute.setValue(Integer.toString(orderValue));
+    	        }
+    	    }
+
+    	    // Get all child elements of the current XML element and going through them recursively
+    	    List<Element> children = element.getChildren();
+    	    for (Element child : children) {
+    	        orderValue = recountingOrder(child, orderValue);
+    	    }
+    	    return orderValue;
+     }
+
+     /**
+      * Saves the updated XML document to the specified file.
+      *
+      * @param document The updated XML document.
+      * @param xmlFile The file to save the XML document into.
+      * @return True if the document is successfully saved, false otherwise.
+      */
      Boolean saveDocument(Document document, File xmlFile) {
-        try {
+         try {
+             // Create a FileWriter to overwrite the XML file
+             FileWriter writer = new FileWriter(xmlFile);
 
-            // Create a FileWriter to overwrite the XML file
-        	FileWriter writer = new FileWriter(xmlFile);
+             // Output the updated XML document to the file
+             XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+             xmlOutputter.output(document, writer);
 
-            // Output the updated XML document to the file
-            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-            xmlOutputter.output(document, writer);
-
-            // Close the FileWriter
-            writer.close();
-        } catch (IOException e) {
-            logger.error("Error saving the XML file: " + e.getMessage());
-            return false;
-        }
-        return true;
-    }
+             // Close the FileWriter
+             writer.close();
+         } catch (IOException e) {
+             logger.error("Error saving the XML file: " + e.getMessage());
+             return false;
+         }
+         return true;
+     }
     
     /**
      * Generates a backup file for the given XML file by creating a copy with a timestamp in the filename.

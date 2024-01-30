@@ -224,7 +224,7 @@ class FixForXmlFiles_Test {
         fileElement.addContent(fLocatElement);
 
         // Test if the method extracts the correct ID value associated with the duplicate TIF value
-        List<String> result = fixForXmlFiles.findIDValueOfDuplicateLines(fileElement, "00000265.tif");
+        List<String> result = fixForXmlFiles.findIDValueOfDuplicateTifValues(fileElement, "00000265.tif");
         assertEquals("FILE_0271", result.get(0)); 
     }
     
