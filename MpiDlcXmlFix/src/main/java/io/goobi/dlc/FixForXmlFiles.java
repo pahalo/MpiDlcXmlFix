@@ -323,14 +323,6 @@ public class FixForXmlFiles {
                 }
             }
         }
-        
-        // If changes were made, save the document
-        if (changesMade) {
-            changesMade = saveDocument(element.getDocument(), xmlFile);
-            if(changesMade) {
-                logger.trace("XML file successfully edited and saved.");
-            }
-        }
         // Recursively explore child elements
         List<Element> children = element.getChildren();
         for (Element child : children) {
@@ -350,9 +342,6 @@ public class FixForXmlFiles {
 		    e.removeContent(); // Remove all children of the element
 		    e.getParentElement().removeContent(e); // Remove the element itself from its parent
 		}
-
-		// Write the modified document back to the XML file
-		saveDocument(element.getDocument(), xmlFile);
         return true;
     }
     	
