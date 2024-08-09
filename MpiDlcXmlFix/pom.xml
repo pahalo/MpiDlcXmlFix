@@ -31,10 +31,5 @@
         	<artifactId>junit-jupiter</artifactId>
         	<version>5.10.0</version>
 		</dependency>
-        <dependency>
-        	<groupId>de.intranda.goobi.workflow</groupId>
-        	<artifactId>goobi-core</artifactId>
-        	<version>23.12.3</version>
-        </dependency>
   </dependencies>
 </project>
