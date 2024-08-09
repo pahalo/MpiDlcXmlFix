@@ -224,7 +224,6 @@ public class FixForXmlFiles {
 							String FILEID = fileIDValues.get(i);
 							physIDValues.addAll(findIDValueOfDuplicateTifValues(rootElement, FILEID));
 						}
-						findAndRewritePHYSValuesOfDuplicateTifValues(doc.getRootElement(), physIDValues, xmlFile);
 
 						// Remove the first Object in the List so we dont delete it from the xml file
 						if (!fileIDValues.isEmpty()) {
@@ -234,6 +233,9 @@ public class FixForXmlFiles {
 							physIDValues.remove(0);
 						}
 						rewriteMetsDivAndFile(doc.getRootElement(), fileIDValues, physIDValues, xmlFile);
+
+						findAndRewritePHYSValuesOfDuplicateTifValues(doc.getRootElement(), physIDValues, xmlFile);
+
 						physIDValues.clear();
 						fileIDValues.clear();
 					}
@@ -380,10 +382,17 @@ public class FixForXmlFiles {
 		// Iterate over each attribute
 		for (org.jdom2.Attribute attribute : attributes) {
 			// Check if the attribute name is 'ID'
-			if (("ID").equals(attribute.getName())) {
+			if ("ID".equals(attribute.getName())) {
 				String value = attribute.getValue();
 				// Check if the value of the attribute is contained in either of the lists
 				if (fileIDValues.contains(value) || physIDValues.contains(value)) {
+					// Add the element to the list of elements to be removed
+					elementsToRemove.add(element);
+					break; // Break loop if found in either list
+				}
+			} else if ("to".equals(attribute.getName()) && "smLink".equals(element.getName())) {
+				String value = attribute.getValue();
+				if (physIDValues.contains(value)) {
 					// Add the element to the list of elements to be removed
 					elementsToRemove.add(element);
 					break; // Break loop if found in either list
@@ -469,7 +478,7 @@ public class FixForXmlFiles {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HHmmssSSS");
 
 		// Name of the backupfile
-		String backupFileName = "meta.xml." + currentTime.format(formatter);
+		String backupFileName = "meta.xml." + currentTime.format(formatter) + ".before-mets-fix";
 
 		// Creating a backupfile in the same directory
 		File backupFile = new File(xmlFile.getParentFile(), backupFileName);
